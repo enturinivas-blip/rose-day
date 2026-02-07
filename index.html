@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Surprise 🌸</title>
+<style>
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: pink;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+}
+
+#startScreen, #roseScreen {
+    text-align: center;
+}
+
+button {
+    padding: 15px 35px;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    background: white;
+    color: #ff4081;
+}
+
+button:hover {
+    background: #ffe4ec;
+}
+
+.rose-container {
+    display: none;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.rose {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transform: scale(0.5);
+    transition: all 1s ease;
+    cursor: pointer;
+}
+
+.rose.show {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.text-rose {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: white;
+    color: #ff4081;
+    font-size: 1.1rem;
+    padding: 15px;
+    text-align: center;
+}
+</style>
+</head>
+
+<body>
+
+<!-- START SCREEN -->
+<div id="startScreen">
+    <h1>🌸 Wanna see a surprise? 🌸</h1>
+    <button onclick="startSurprise()">Yes 💖</button>
+</div>
+
+<!-- ROSE SCREEN -->
+<div id="roseScreen" style="display:none;">
+    <h2>Pick the roses one by one 🌹</h2>
+    <div class="rose-container" id="roses">
+
+        <!-- Rose 1 – Photo -->
+        <div class="rose" style="background-image:url('PHOTO1_URL');"></div>
+
+        <!-- Rose 2 – Photo -->
+        <div class="rose" style="background-image:url('PHOTO2_URL');"></div>
+
+        <!-- Rose 3 – Photo -->
+        <div class="rose" style="background-image:url('PHOTO3_URL');"></div>
+
+        <!-- Rose 4 – Photo -->
+        <div class="rose" style="background-image:url('PHOTO4_URL');"></div>
+
+        <!-- Rose 5 – Text -->
+        <div class="rose text-rose">
+            You are my favorite feeling,  
+            my safest place,  
+            and my forever 🌹❤️
+        </div>
+
+    </div>
+</div>
+
+<!-- MUSIC -->
+<audio id="music" loop>
+    <source src="MUSIC_URL" type="audio/mpeg">
+</audio>
+
+<script>
+function startSurprise() {
+    document.getElementById("startScreen").style.display = "none";
+    document.getElementById("roseScreen").style.display = "block";
+    document.getElementById("roses").style.display = "flex";
+    document.getElementById("music").play();
+
+    let roses = document.querySelectorAll(".rose");
+    roses.forEach((rose, index) => {
+        setTimeout(() => {
+            rose.classList.add("show");
+        }, index * 1200);
+    });
+}
+</script>
+
+</body>
+</html>
