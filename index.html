@@ -3,125 +3,193 @@
 <head>
 <meta charset="UTF-8">
 <title>Surprise for Praneetha 🌸</title>
+
+<!-- Aesthetic Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+
 <style>
 body {
     margin: 0;
-    font-family: 'Segoe UI', sans-serif;
-    background: pink;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(to bottom, #ffd1dc, #ffb6c1);
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
     overflow: hidden;
 }
 
-#startScreen, #roseScreen {
-    text-align: center;
+/* 🌸 Falling petals */
+.petal {
+    position: fixed;
+    top: -10%;
+    font-size: 24px;
+    animation: fall linear infinite;
+    opacity: 0.8;
+}
+@keyframes fall {
+    to {
+        transform: translateY(120vh) rotate(360deg);
+    }
+}
+
+h1, h2 {
+    font-family: 'Playfair Display', serif;
+    color: #b30059;
 }
 
 button {
-    padding: 15px 35px;
-    font-size: 1.2rem;
+    padding: 14px 34px;
+    font-size: 1.1rem;
     border: none;
     border-radius: 30px;
-    cursor: pointer;
     background: white;
-    color: #ff4081;
+    color: #b30059;
+    cursor: pointer;
 }
 
-button:hover {
-    background: #ffe4ec;
+#startScreen, #roseScreen, #viewScreen, #endScreen {
+    text-align: center;
+    animation: fadeIn 0.8s ease;
 }
 
-.rose-container {
-    display: none;
+@keyframes fadeIn {
+    from {opacity:0; transform: scale(0.95);}
+    to {opacity:1; transform: scale(1);}
+}
+
+.rose-grid {
+    display: flex;
     gap: 20px;
     flex-wrap: wrap;
     justify-content: center;
+    margin-top: 30px;
 }
 
-.rose {
-    width: 140px;
-    height: 140px;
+.rose-icon {
+    width: 120px;
+    height: 120px;
     border-radius: 50%;
+    background-image: url("https://pngimg.com/uploads/rose/rose_PNG66920.png");
     background-size: cover;
     background-position: center;
-    opacity: 0;
-    transform: scale(0.5);
-    transition: all 1s ease;
     cursor: pointer;
+    transition: transform 0.4s, box-shadow 0.4s;
 }
 
-.rose.show {
-    opacity: 1;
-    transform: scale(1);
+.rose-icon:hover {
+    transform: scale(1.15);
+    box-shadow: 0 0 25px rgba(255,0,102,0.6);
 }
 
-.text-rose {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+#viewScreen img {
+    max-width: 280px;
+    border-radius: 20px;
+    box-shadow: 0 0 30px rgba(255,0,102,0.4);
+    animation: glow 2s infinite alternate;
+}
+
+@keyframes glow {
+    from { box-shadow: 0 0 15px rgba(255,0,102,0.4); }
+    to { box-shadow: 0 0 35px rgba(255,0,102,0.8); }
+}
+
+.text-card {
     background: white;
-    color: #ff4081;
+    padding: 25px;
+    border-radius: 20px;
+    color: #b30059;
     font-size: 1.1rem;
-    padding: 15px;
-    text-align: center;
+    max-width: 320px;
+    box-shadow: 0 0 30px rgba(255,0,102,0.4);
+}
+
+.back-btn {
+    margin-top: 25px;
 }
 </style>
 </head>
 
 <body>
 
-<!-- START SCREEN -->
+<!-- START -->
 <div id="startScreen">
-    <h1>🌸 Wanna see a surprise, Praneetha? 🌸</h1>
+    <h1>Wanna see a surprise, Praneetha? 🌸</h1>
     <button onclick="startSurprise()">Yes 💖</button>
 </div>
 
-<!-- ROSE SCREEN -->
+<!-- ROSES -->
 <div id="roseScreen" style="display:none;">
     <h2>Pick the roses one by one 🌹</h2>
-    <div class="rose-container" id="roses">
-
-        <div class="rose" style="background-image:url('https://raw.githubusercontent.com/enturinivas-blip/rose-day/main/1770438024258.jpg.jpeg');"></div>
-
-        <div class="rose" style="background-image:url('https://raw.githubusercontent.com/enturinivas-blip/rose-day/main/IMG_20251126_110738.jpg.jpeg');"></div>
-
-        <div class="rose" style="background-image:url('https://raw.githubusercontent.com/enturinivas-blip/rose-day/main/IMG_20260201_150328.jpg.jpeg');"></div>
-
-        <div class="rose" style="background-image:url('https://raw.githubusercontent.com/enturinivas-blip/rose-day/main/Snapchat-20651560.jpg.jpeg');"></div>
-
-        <div class="rose text-rose">
-            Praneetha ❤️<br><br>
-            You are my favorite feeling,<br>
-            my happiest thought,<br>
-            and my forever 🌹
-        </div>
-
+    <div class="rose-grid">
+        <div class="rose-icon" onclick="openRose(1)"></div>
+        <div class="rose-icon" onclick="openRose(2)"></div>
+        <div class="rose-icon" onclick="openRose(3)"></div>
+        <div class="rose-icon" onclick="openRose(4)"></div>
+        <div class="rose-icon" onclick="openRose(5)"></div>
     </div>
+</div>
+
+<!-- VIEW -->
+<div id="viewScreen" style="display:none;">
+    <div id="content"></div>
+    <button class="back-btn" onclick="goBack()">← Back</button>
+</div>
+
+<!-- END -->
+<div id="endScreen" style="display:none;">
+    <h1>Praneetha ❤️</h1>
+    <p>You picked every rose…<br>and you’re still my favorite one 🌹</p>
 </div>
 
 <!-- MUSIC -->
 <audio id="music" loop>
-    <source src="https://raw.githubusercontent.com/enturinivas-blip/rose-day/main/Harleys%20in%20hawaii%20%F0%9F%A4%8D%F0%9F%95%8A%20kdrama%20edit%20_shorts%20_youtubeshorts%20_lyrics%20_harleyshawaii(MP3_160K).mp3.mpeg" type="audio/mpeg">
+    <source src="https://raw.githubusercontent.com/enturinivas-blip/rose-day/main/Harleys%20in%20hawaii%20%F0%9F%A4%8D%F0%9F%95%8A%20kdrama%20edit%20_shorts%20_youtubeshorts%20_lyrics%20_harleyshawaii(MP3_160K).mp3.mpeg">
 </audio>
 
 <script>
+let opened = new Set();
+
 function startSurprise() {
     document.getElementById("startScreen").style.display = "none";
     document.getElementById("roseScreen").style.display = "block";
-    document.getElementById("roses").style.display = "flex";
     document.getElementById("music").play();
+    createPetals();
+}
 
-    let roses = document.querySelectorAll(".rose");
-    roses.forEach((rose, index) => {
-        setTimeout(() => {
-            rose.classList.add("show");
-        }, index * 1200);
-    });
+function openRose(n) {
+    opened.add(n);
+    document.getElementById("roseScreen").style.display = "none";
+    document.getElementById("viewScreen").style.display = "block";
+
+    let c = document.getElementById("content");
+    if (n===1) c.innerHTML = `<img src="https://raw.githubusercontent.com/enturinivas-blip/rose-day/main/1770438024258.jpg.jpeg">`;
+    if (n===2) c.innerHTML = `<img src="https://raw.githubusercontent.com/enturinivas-blip/rose-day/main/IMG_20251126_110738.jpg.jpeg">`;
+    if (n===3) c.innerHTML = `<img src="https://raw.githubusercontent.com/enturinivas-blip/rose-day/main/IMG_20260201_150328.jpg.jpeg">`;
+    if (n===4) c.innerHTML = `<img src="https://raw.githubusercontent.com/enturinivas-blip/rose-day/main/Snapchat-20651560.jpg.jpeg">`;
+    if (n===5) c.innerHTML = `<div class="text-card">Every rose led back to you.<br>And I’d choose you again — always 🌹</div>`;
+}
+
+function goBack() {
+    document.getElementById("viewScreen").style.display = "none";
+    if (opened.size === 5) {
+        document.getElementById("endScreen").style.display = "block";
+    } else {
+        document.getElementById("roseScreen").style.display = "block";
+    }
+}
+
+function createPetals() {
+    for (let i=0;i<15;i++) {
+        let p = document.createElement("div");
+        p.className = "petal";
+        p.innerHTML = "🌸";
+        p.style.left = Math.random()*100 + "vw";
+        p.style.animationDuration = (5+Math.random()*5)+"s";
+        document.body.appendChild(p);
+    }
 }
 </script>
 
 </body>
 </html>
-
