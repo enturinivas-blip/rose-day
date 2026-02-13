@@ -19,7 +19,7 @@ align-items:center;
 overflow:hidden;
 }
 
-/* petals */
+/* 🌸 petals */
 .petal{
 position:fixed;
 top:-10%;
@@ -30,7 +30,7 @@ animation:fall linear infinite;
 to{transform:translateY(120vh) rotate(360deg);}
 }
 
-/* card */
+/* CARD */
 .card{
 text-align:center;
 background:white;
@@ -69,7 +69,7 @@ color:white;
 position:absolute;
 }
 
-/* loading bar */
+/* 💙 Loading */
 #meterBox{
 width:260px;
 height:14px;
@@ -84,13 +84,13 @@ width:0;
 background:#5bbcff;
 transition:1s ease;
 }
-
 .blueHeart{
 font-size:38px;
 cursor:pointer;
 color:#5bbcff;
 }
 
+/* options */
 .option{
 display:block;
 background:#fff0f6;
@@ -101,24 +101,32 @@ cursor:pointer;
 width:90%;
 }
 
-/* slideshow */
+/* 📸 slideshow centered */
 #slideshow{
-margin-top:15px;
-height:240px;
+margin-top:20px;
+height:260px;
+display:flex;
+justify-content:center;
+align-items:center;
 position:relative;
+width:100%;
 }
+
 .slide{
 position:absolute;
-width:210px;
+left:50%;
+top:50%;
+transform:translate(-50%,-50%) scale(.9);
+width:220px;
 border-radius:18px;
 opacity:0;
-transform:scale(.9);
-transition:1s;
+transition:all 1s ease;
 box-shadow:0 0 25px rgba(255,77,109,.4);
 }
+
 .slide.active{
 opacity:1;
-transform:scale(1);
+transform:translate(-50%,-50%) scale(1);
 }
 </style>
 </head>
@@ -170,17 +178,17 @@ transform:scale(1);
 
 <script>
 
-/* SAFE element references (fixes blank page) */
-const start = document.getElementById("start");
-const meter = document.getElementById("meter");
-const fav = document.getElementById("fav");
-const question = document.getElementById("question");
-const end = document.getElementById("end");
-const meterFill = document.getElementById("meterFill");
-const favText = document.getElementById("favText");
-const slideshow = document.getElementById("slideshow");
-const music = document.getElementById("music");
-const noBtn = document.getElementById("no");
+/* safe element refs */
+const start=document.getElementById("start");
+const meter=document.getElementById("meter");
+const fav=document.getElementById("fav");
+const question=document.getElementById("question");
+const end=document.getElementById("end");
+const meterFill=document.getElementById("meterFill");
+const favText=document.getElementById("favText");
+const slideshow=document.getElementById("slideshow");
+const music=document.getElementById("music");
+const noBtn=document.getElementById("no");
 
 let love=0;
 let tries=0;
@@ -194,6 +202,7 @@ const images=[
 "https://raw.githubusercontent.com/enturinivas-blip/rose-day/main/Snapchat-1133313667.jpg"
 ];
 
+/* petals */
 function createPetals(){
 for(let i=0;i<18;i++){
 let p=document.createElement("div");
@@ -221,14 +230,17 @@ fav.style.display="block";
 }
 }
 
+/* ⭐ your logic */
 function favAnswer(){
-favText.innerText="I like everything about you ❤️";
+favText.innerText="All are correct ❤️\nbut 4th one I want more 🤭❤️";
+
 setTimeout(()=>{
 fav.style.display="none";
 question.style.display="block";
-},1200);
+},1400);
 }
 
+/* no escaping */
 noBtn.onmouseover=()=>{
 tries++;
 noBtn.style.left=Math.random()*70+"vw";
