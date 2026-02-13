@@ -1,183 +1,334 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Valentine 🌸</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine 🌸</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #ffd1dc, #ffb6c1, #ff69b4);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            transition: all 1.5s ease;
+        }
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+        /* 🌸 Petals */
+        .petal {
+            position: fixed;
+            top: -10%;
+            font-size: 24px;
+            opacity: 0.8;
+            animation: fall linear infinite;
+            pointer-events: none;
+        }
 
-<style>
-body{
-margin:0;
-font-family:'Poppins',sans-serif;
-background:linear-gradient(to bottom,#ffd1dc,#ffb6c1);
-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
-overflow:hidden;
-}
+        @keyframes fall {
+            to {
+                transform: translateY(120vh) rotate(360deg);
+            }
+        }
 
-/* 🌸 PETALS BEHIND EVERYTHING */
-.petal{
-position:fixed;
-top:-10%;
-font-size:24px;
-opacity:.7;
-animation:fall linear infinite;
-z-index:0;
-pointer-events:none;
-}
-@keyframes fall{
-to{transform:translateY(120vh) rotate(360deg);}
-}
+        /* Card */
+        .card {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 25px;
+            box-shadow: 0 10px 40px rgba(255, 0, 102, 0.3);
+            animation: fade 0.8s ease;
+            width: 90%;
+            max-width: 450px;
+            position: relative;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
 
-/* CARD */
-.card{
-position:relative;
-z-index:5;
-text-align:center;
-background:white;
-padding:28px;
-border-radius:25px;
-box-shadow:0 0 30px rgba(255,0,102,.2);
-width:85%;
-max-width:420px;
-animation:fade .8s ease;
-}
+        h1 {
+            font-family: 'Playfair Display', serif;
+            color: #b30059;
+            margin-bottom: 20px;
+            font-size: 2rem;
+        }
 
-h1{
-font-family:'Playfair Display',serif;
-color:#b30059;
-}
+        button {
+            padding: 15px 35px;
+            border: none;
+            border-radius: 30px;
+            background: #fff;
+            color: #b30059;
+            cursor: pointer;
+            font-size: 1.1rem;
+            margin: 10px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
 
-button{
-padding:14px 32px;
-border:none;
-border-radius:30px;
-cursor:pointer;
-font-size:1rem;
-margin:10px;
-transition:.3s;
-}
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
 
-#yes{
-background:#ff69b4;
-color:white;
-}
+        #yes {
+            background: linear-gradient(45deg, #ff69b4, #ff1493);
+            color: white;
+            box-shadow: 0 0 20px rgba(255, 105, 180, 0.4);
+        }
 
-#no{
-background:#ff4d4d;
-color:white;
-position:absolute;
-}
+        #yes:hover {
+            box-shadow: 0 0 30px rgba(255, 105, 180, 0.6);
+        }
 
-@keyframes fade{
-from{opacity:0;transform:scale(.95);}
-to{opacity:1;transform:scale(1);}
-}
+        #no {
+            background: linear-gradient(45deg, #ff4d4d, #ff0000);
+            color: white;
+            position: absolute;
+            transition: all 0.3s ease;
+        }
 
-/* END TEXT */
-.endText{
-font-size:20px;
-margin-top:10px;
-}
+        @keyframes fade {
+            from {
+                opacity: 0;
+                transform: scale(0.95) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
 
-/* SLIDESHOW */
-#slideshow{
-margin-top:20px;
-height:220px;
-display:flex;
-justify-content:center;
-align-items:center;
-position:relative;
-}
-.slide{
-position:absolute;
-width:200px;
-border-radius:18px;
-opacity:0;
-transition:1s;
-}
-.slide.active{
-opacity:1;
-}
-</style>
+        /* Heart Meter */
+        #meterBox {
+            width: 280px;
+            height: 16px;
+            background: #ffdce5;
+            border-radius: 20px;
+            margin: 20px auto;
+            overflow: hidden;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        #meterFill {
+            height: 100%;
+            width: 0;
+            background: linear-gradient(90deg, #ff4d6d, #ff69b4);
+            transition: width 1s ease;
+            border-radius: 20px;
+        }
+
+        .heart {
+            font-size: 40px;
+            cursor: pointer;
+            margin: 8px;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .heart:hover {
+            transform: scale(1.2);
+            filter: drop-shadow(0 0 10px rgba(255, 77, 109, 0.5));
+        }
+
+        /* Ending Glow */
+        #end h1 {
+            animation: softGlow 3s infinite alternate;
+        }
+
+        @keyframes softGlow {
+            from {
+                text-shadow: 0 0 10px rgba(255, 0, 102, 0.3);
+            }
+            to {
+                text-shadow: 0 0 25px rgba(255, 0, 102, 0.7);
+            }
+        }
+
+        .endText {
+            font-size: 18px;
+            margin-top: 15px;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        /* 📸 Slideshow */
+        #slideshow {
+            margin-top: 25px;
+            height: 250px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+        }
+
+        .slide {
+            position: absolute;
+            width: 100%;
+            max-width: 220px;
+            height: auto;
+            border-radius: 15px;
+            opacity: 0;
+            transform: scale(0.9);
+            transition: all 1s ease;
+            box-shadow: 0 5px 20px rgba(255, 77, 109, 0.3);
+        }
+
+        .slide.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .card {
+                width: 95%;
+                padding: 20px;
+            }
+            h1 {
+                font-size: 1.5rem;
+            }
+            #slideshow {
+                height: 200px;
+            }
+            .slide {
+                max-width: 180px;
+            }
+        }
+    </style>
 </head>
-
 <body>
+    <!-- START -->
+    <div class="card" id="start">
+        <h1>💌 Tap to open your love letter</h1>
+        <button onclick="openLetter()">Open 💙</button>
+    </div>
 
-<div class="card" id="question">
-<h1>Will you be my Valentine? 🌹</h1>
-<button id="yes" onclick="accept()">YES 💖</button>
-<button id="no">No 😢</button>
-</div>
+    <!-- METER -->
+    <div class="card" id="meter" style="display: none;">
+        <h1>Fill my heart ❤️</h1>
+        <div id="meterBox">
+            <div id="meterFill"></div>
+        </div>
+        <div>
+            <span class="heart" onclick="addLove()">❤️</span>
+            <span class="heart" onclick="addLove()">❤️</span>
+            <span class="heart" onclick="addLove()">❤️</span>
+            <span class="heart" onclick="addLove()">❤️</span>
+            <span class="heart" onclick="addLove()">❤️</span>
+        </div>
+    </div>
 
-<div class="card" id="end" style="display:none;">
-<h1>love you praneetha ❤️</h1>
-<p class="endText">I wanna be with you till my last breath 🌸</p>
-<div id="slideshow"></div>
-</div>
+    <!-- QUESTION -->
+    <div class="card" id="question" style="display: none;">
+        <h1>Will you be my Valentine? 🌹</h1>
+        <button id="yes" onclick="accept()">YES 💖</button>
+        <button id="no">Are you sure?</button>
+    </div>
 
-<audio id="music" loop>
-<source src="https://raw.githubusercontent.com/enturinivas-blip/rose-day/main/iddarammayilatho%20movie%20song%20ringtone%20please%20subscribe%20this%20channel%20%F0%9F%99%8F%F0%9F%99%8F(MP3_160K).mp3">
-</audio>
+    <!-- END -->
+    <div class="card" id="end" style="display: none;">
+        <h1>Love you Praneetha ❤️</h1>
+        <p class="endText">I wanna be with you till my last breath 🌸</p>
+        <div id="slideshow"></div>
+    </div>
 
-<script>
+    <!-- MUSIC -->
+    <audio id="music" loop>
+        <source src="https://raw.githubusercontent.com/enturinivas-blip/rose-day/main/iddarammayilatho%20movie%20song%20ringtone%20please%20subscribe%20this%20channel%20%F0%9F%99%8F%F0%9F%99%8F(MP3_160K).mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
 
-/* 🌸 Create petals behind card */
-for(let i=0;i<18;i++){
-let p=document.createElement("div");
-p.className="petal";
-p.innerHTML="🌸";
-p.style.left=Math.random()*100+"vw";
-p.style.animationDuration=(6+Math.random()*6)+"s";
-document.body.appendChild(p);
-}
+    <script>
+        let love = 0;
+        let tries = 0;
+        const texts = ["Are you sure?", "Really?", "Think again 😭"];
 
-/* RUNAWAY NO BUTTON FLOW */
-let tries=0;
-const texts=["Are you sure?","Really?","Think again 😭"];
-no.onmouseover=()=>{
-tries++;
-no.style.left=Math.random()*60+"vw";
-no.style.top=Math.random()*60+"vh";
-if(tries<texts.length) no.innerText=texts[tries];
-};
+        const images = [
+            "https://raw.githubusercontent.com/enturinivas-blip/rose-day/main/1758881038362.jpg",
+            "https://raw.githubusercontent.com/enturinivas-blip/rose-day/main/Snapchat-1135964605.jpg",
+            "https://raw.githubusercontent.com/enturinivas-blip/rose-day/main/IMG_20260201_150451.jpg",
+            "https://raw.githubusercontent.com/enturinivas-blip/rose-day/main/Snapchat-1133313667.jpg"
+        ];
 
-/* ACCEPT */
-const images=[
-"https://raw.githubusercontent.com/enturinivas-blip/rose-day/main/1758881038362.jpg",
-"https://raw.githubusercontent.com/enturinivas-blip/rose-day/main/Snapchat-1135964605.jpg",
-"https://raw.githubusercontent.com/enturinivas-blip/rose-day/main/IMG_20260201_150451.jpg",
-"https://raw.githubusercontent.com/enturinivas-blip/rose-day/main/Snapchat-1133313667.jpg"
-];
+        function createPetals() {
+            for (let i = 0; i < 20; i++) {
+                let p = document.createElement("div");
+                p.className = "petal";
+                p.innerHTML = "🌸";
+                p.style.left = Math.random() * 100 + "vw";
+                p.style.animationDuration = (6 + Math.random() * 6) + "s";
+                p.style.animationDelay = Math.random() * 5 + "s";
+                document.body.appendChild(p);
+            }
+        }
 
-function accept(){
-question.style.display="none";
-end.style.display="block";
-music.play();
+        function openLetter() {
+            document.getElementById('start').style.display = "none";
+            document.getElementById('meter').style.display = "block";
+            document.getElementById('music').play();
+            createPetals();
+        }
 
-/* slideshow */
-let i=0;
-images.forEach(src=>{
-let img=document.createElement("img");
-img.src=src;
-img.className="slide";
-slideshow.appendChild(img);
-});
+        function addLove() {
+            love += 20;
+            document.getElementById('meterFill').style.width = love + "%";
+            if (love >= 100) {
+                document.getElementById('meter').style.display = "none";
+                document.getElementById('question').style.display = "block";
+                setTimeout(() => alert("Don't press no 💌"), 500);
+            }
+        }
 
-const slides=document.querySelectorAll(".slide");
-slides[0].classList.add("active");
+        document.getElementById('no').onmouseover = () => {
+            tries++;
+            document.getElementById('no').style.left = Math.random() * 70 + "vw";
+            document.getElementById('no').style.top = Math.random() * 70 + "vh";
+            document.getElementById('no').style.transform = `scale(${1 - (tries * 0.1)})`;
+            if (tries < texts.length) {
+                document.getElementById('no').innerText = texts[tries];
+            }
+        };
 
-setInterval(()=>{
-slides[i].classList.remove("active");
-i=(i+1)%slides.length;
-slides[i].classList.add("active");
-},2500);
-}
+        function accept() {
+            document.getElementById('question').style.display = "none";
+            document.getElementById('end').style.display = "block";
 
-</script>
+            // Create slideshow
+            let i = 0;
+            images.forEach(src => {
+                let img = document.createElement("img");
+                img.src = src;
+                img.className = "slide";
+                document.getElementById('slideshow').appendChild(img);
+            });
+
+            const slides = document.querySelectorAll(".slide");
+            slides[0].classList.add("active");
+
+            setInterval(() => {
+                slides[i].classList.remove("active");
+                i = (i + 1) % slides.length;
+                slides[i].classList.add("active");
+            }, 3000);
+
+            // Soft breathing background
+            document.body.animate([
+                { transform: "scale(1)" },
+                { transform: "scale(1.02)" },
+                { transform: "scale(1)" }
+            ], {
+                duration: 6000,
+                iterations: Infinity,
+                easing: "ease-in-out"
+            });
+        }
+    </script>
 </body>
 </html>
