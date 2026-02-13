@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Valentine 🌸</title>
 
-<!-- Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
 
 <style>
@@ -21,7 +20,7 @@ overflow:hidden;
 transition:1.5s ease;
 }
 
-/* 🌸 Falling petals */
+/* 🌸 Petals */
 .petal{
 position:fixed;
 top:-10%;
@@ -43,6 +42,7 @@ box-shadow:0 0 30px rgba(255,0,102,.2);
 animation:fade .8s ease;
 width:85%;
 max-width:420px;
+position:relative;
 }
 
 h1{
@@ -97,7 +97,7 @@ transition:.3s;
 }
 .heart:hover{transform:scale(1.2);}
 
-/* Ending text glow */
+/* Ending Glow */
 #end h1{
 animation:softGlow 3s infinite alternate;
 }
@@ -110,18 +110,43 @@ to{text-shadow:0 0 25px rgba(255,0,102,.7);}
 font-size:20px;
 margin-top:10px;
 }
+
+/* 📸 Slideshow */
+#slideshow{
+margin-top:20px;
+height:240px;
+display:flex;
+justify-content:center;
+align-items:center;
+position:relative;
+}
+
+.slide{
+position:absolute;
+width:200px;
+border-radius:18px;
+opacity:0;
+transform:scale(.9);
+transition:all 1s ease;
+box-shadow:0 0 25px rgba(255,77,109,.4);
+}
+
+.slide.active{
+opacity:1;
+transform:scale(1);
+}
 </style>
 </head>
 
 <body>
 
-<!-- 💌 START -->
+<!-- START -->
 <div class="card" id="start">
 <h1>💌 Tap to open your love letter</h1>
 <button onclick="openLetter()">Open 💙</button>
 </div>
 
-<!-- ❤️ HEART METER -->
+<!-- METER -->
 <div class="card" id="meter" style="display:none;">
 <h1>Fill my heart ❤️</h1>
 <div id="meterBox"><div id="meterFill"></div></div>
@@ -134,20 +159,22 @@ margin-top:10px;
 </div>
 </div>
 
-<!-- 💘 QUESTION -->
+<!-- QUESTION -->
 <div class="card" id="question" style="display:none;">
 <h1>Will you be my Valentine? 🌹</h1>
 <button id="yes" onclick="accept()">YES 💖</button>
 <button id="no">Are you sure?</button>
 </div>
 
-<!-- 🌸 END -->
+<!-- END -->
 <div class="card" id="end" style="display:none;">
 <h1>love you praneetha ❤️</h1>
 <p class="endText">I wanna be with you till my last breath 🌸</p>
+
+<div id="slideshow"></div>
 </div>
 
-<!-- 🎵 MUSIC -->
+<!-- MUSIC -->
 <audio id="music" loop>
 <source src="https://raw.githubusercontent.com/enturinivas-blip/rose-day/main/iddarammayilatho%20movie%20song%20ringtone%20please%20subscribe%20this%20channel%20%F0%9F%99%8F%F0%9F%99%8F(MP3_160K).mp3">
 </audio>
@@ -157,6 +184,13 @@ margin-top:10px;
 let love=0;
 let tries=0;
 const texts=["Are you sure?","Really?","Think again 😭"];
+
+const images=[
+"https://raw.githubusercontent.com/enturinivas-blip/rose-day/main/1758881038362.jpg",
+"https://raw.githubusercontent.com/enturinivas-blip/rose-day/main/Snapchat-1135964605.jpg",
+"https://raw.githubusercontent.com/enturinivas-blip/rose-day/main/IMG_20260201_150451.jpg",
+"https://raw.githubusercontent.com/enturinivas-blip/rose-day/main/Snapchat-1133313667.jpg"
+];
 
 function createPetals(){
 for(let i=0;i<18;i++){
@@ -187,7 +221,6 @@ alert("don't press no 💌");
 }
 }
 
-/* 😄 Runaway NO button */
 no.onmouseover=()=>{
 tries++;
 no.style.left=Math.random()*70+"vw";
@@ -196,10 +229,27 @@ no.style.transform=`scale(${1-(tries*.1)})`;
 if(tries<texts.length)no.innerText=texts[tries];
 };
 
-/* 🌸 Ending */
 function accept(){
 question.style.display="none";
 end.style.display="block";
+
+/* 📸 Create slideshow */
+let i=0;
+images.forEach(src=>{
+let img=document.createElement("img");
+img.src=src;
+img.className="slide";
+slideshow.appendChild(img);
+});
+
+const slides=document.querySelectorAll(".slide");
+slides[0].classList.add("active");
+
+setInterval(()=>{
+slides[i].classList.remove("active");
+i=(i+1)%slides.length;
+slides[i].classList.add("active");
+},2500);
 
 /* soft breathing background */
 document.body.animate([
@@ -212,7 +262,6 @@ iterations:Infinity,
 easing:"ease-in-out"
 });
 }
-
 </script>
 </body>
 </html>
