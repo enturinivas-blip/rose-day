@@ -2,9 +2,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Valentine Surprise 💘</title>
+<title>Valentine Letter 💌</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Great+Vibes&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
 
 <style>
 body{
@@ -13,27 +13,165 @@ height:100vh;
 display:flex;
 justify-content:center;
 align-items:center;
-background:linear-gradient(135deg,#aee7ff,#cfefff);
-font-family:'Poppins',sans-serif;
+background:linear-gradient(135deg,#cfefff,#e6f7ff);
+font-family:Poppins;
 overflow:hidden;
-transition:background 1.5s ease;
+transition:background 2s ease;
 }
 
-.container{
-text-align:center;
-}
+.center{ text-align:center; }
 
-h1{
-font-family:'Playfair Display',serif;
-color:#ff4d6d;
-}
+h1{ font-family:"Playfair Display"; color:#ff4d6d; }
 
-.hearts{
-font-size:40px;
+button{
+padding:14px 30px;
+margin:10px;
+border:none;
+border-radius:30px;
+font-size:1.1rem;
 cursor:pointer;
-margin:20px;
-transition:transform .3s;
+transition:.3s;
 }
+
+#yes{ background:#ff69b4; color:white; }
+#no{ background:#ff4d4d; color:white; position:absolute; }
+
+#letter{ font-size:70px; cursor:pointer; animation:float 2s infinite alternate; }
+@keyframes float{ from{transform:translateY(0);} to{transform:translateY(-10px);} }
+
+#meterBox{
+width:260px;height:14px;background:#ffffff88;
+border-radius:20px;margin:20px auto;overflow:hidden;
+}
+#meterFill{height:100%;width:0;background:red;transition:1s;}
+
+.heart{ font-size:40px; cursor:pointer; margin:10px; }
+
+#question{ display:none; }
+#end{ display:none; }
+
+.rain{
+position:absolute;
+font-family:"Great Vibes";
+font-size:26px;
+color:#ff4d6d;
+animation:fall linear infinite;
+}
+@keyframes fall{
+0%{transform:translateY(-10vh);}
+100%{transform:translateY(110vh);}
+}
+
+#slideshow img{
+width:220px;
+border-radius:15px;
+box-shadow:0 0 20px #ff4d6d55;
+}
+</style>
+</head>
+
+<body>
+
+<div class="center" id="start">
+<div id="letter">💙💌</div>
+<h2>Tap to open your letter</h2>
+</div>
+
+<div class="center" id="meter" style="display:none;">
+<h1>Fill my heart ❤️</h1>
+<div id="meterBox"><div id="meterFill"></div></div>
+<div>
+<span class="heart" onclick="addLove()">❤️</span>
+<span class="heart" onclick="addLove()">❤️</span>
+<span class="heart" onclick="addLove()">❤️</span>
+<span class="heart" onclick="addLove()">❤️</span>
+<span class="heart" onclick="addLove()">❤️</span>
+</div>
+</div>
+
+<div class="center" id="question">
+<h1>Now that my heart is full…<br>will you be my Valentine? 💌</h1>
+<button id="yes" onclick="accept()">YES 💖</button>
+<button id="no">Are you sure?</button>
+</div>
+
+<div class="center" id="end">
+<h1 style="font-family:'Great Vibes';font-size:48px;">love you praneetha</h1>
+<div id="slideshow"></div>
+</div>
+
+<audio id="music" loop>
+<source src="https://raw.githubusercontent.com/enturinivas-blip/rose-day/main/iddarammayilatho%20movie%20song%20ringtone%20please%20subscribe%20this%20channel%20%F0%9F%99%8F%F0%9F%99%8F(MP3_160K).mp3">
+</audio>
+
+<script>
+let love=0;
+let tries=0;
+let texts=["Are you sure?","Really?","Think again 😭"];
+
+const images=[
+"https://raw.githubusercontent.com/enturinivas-blip/rose-day/refs/heads/main/1758881038362.jpg",
+"https://raw.githubusercontent.com/enturinivas-blip/rose-day/refs/heads/main/Snapchat-1135964605.jpg",
+"https://raw.githubusercontent.com/enturinivas-blip/rose-day/refs/heads/main/IMG_20260201_150451.jpg",
+"https://raw.githubusercontent.com/enturinivas-blip/rose-day/refs/heads/main/IMG_20260201_150451.jpg",
+"https://raw.githubusercontent.com/enturinivas-blip/rose-day/refs/heads/main/Snapchat-1133313667.jpg"
+];
+
+document.getElementById("letter").onclick=()=>{
+document.getElementById("start").style.display="none";
+document.getElementById("meter").style.display="block";
+document.getElementById("music").play();
+};
+
+function addLove(){
+love+=20;
+document.getElementById("meterFill").style.width=love+"%";
+
+document.body.style.background=
+`linear-gradient(135deg,rgb(${174+love},231,255),rgb(255,${192-love},203))`;
+
+if(love>=100){
+document.getElementById("meter").style.display="none";
+document.getElementById("question").style.display="block";
+alert("don't press no 💌");
+}
+}
+
+const noBtn=document.getElementById("no");
+noBtn.addEventListener("mouseover",()=>{
+tries++;
+noBtn.style.left=Math.random()*80+"vw";
+noBtn.style.top=Math.random()*80+"vh";
+noBtn.style.transform=`scale(${1-(tries*0.1)})`;
+if(tries<texts.length){ noBtn.innerText=texts[tries]; }
+});
+
+function accept(){
+document.getElementById("question").style.display="none";
+document.getElementById("end").style.display="block";
+
+/* rain text */
+for(let i=0;i<30;i++){
+let r=document.createElement("div");
+r.className="rain";
+r.innerText="love you praneetha";
+r.style.left=Math.random()*100+"vw";
+r.style.animationDuration=(5+Math.random()*5)+"s";
+document.body.appendChild(r);
+}
+
+/* slideshow */
+let s=document.getElementById("slideshow");
+let i=0;
+setInterval(()=>{
+s.innerHTML=`<img src="${images[i]}">`;
+i=(i+1)%images.length;
+},2000);
+}
+</script>
+
+</body>
+</html>
 
 .hearts:hover{ transform:scale(1.2); }
 
