@@ -1,294 +1,267 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Valentine's Love Letter</title>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #ff9a9e, #fecfef, #fad0c4, #a8edea);
-            color: #333;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            position: relative;
-        }
-        .container {
-            text-align: center;
-            max-width: 600px;
-            padding: 30px;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 25px;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
-            animation: fadeIn 2s ease-in-out;
-            position: relative;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.8) rotate(-5deg); }
-            to { opacity: 1; transform: scale(1) rotate(0deg); }
-        }
-        .emoji {
-            font-size: 5em;
-            margin-bottom: 20px;
-            animation: bounce 2s infinite;
-        }
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-10px); }
-            60% { transform: translateY(-5px); }
-        }
-        .love-meter {
-            margin: 20px 0;
-            font-size: 1.5em;
-            font-weight: 600;
-        }
-        .hearts {
-            display: inline-block;
-            opacity: 0;
-            transition: opacity 2s ease-in-out;
-        }
-        .question {
-            font-family: 'Dancing Script', cursive;
-            font-size: 2.5em;
-            margin: 20px 0;
-            color: #e91e63;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-        }
-        .buttons {
-            margin: 20px 0;
-        }
-        button {
-            padding: 12px 25px;
-            font-size: 1.2em;
-            font-weight: 600;
-            border: none;
-            border-radius: 15px;
-            cursor: pointer;
-            margin: 0 10px;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-        .yes {
-            background: linear-gradient(45deg, #ff69b4, #ff1493);
-            color: white;
-        }
-        .yes:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 20px rgba(255, 105, 180, 0.3);
-        }
-        .no {
-            background: linear-gradient(45deg, #ff0000, #cc0000);
-            color: white;
-        }
-        .no:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 20px rgba(255, 0, 0, 0.3);
-        }
-        .popup {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: rgba(255, 255, 255, 0.95);
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            display: none;
-            z-index: 1000;
-            font-size: 1.5em;
-            font-family: 'Dancing Script', cursive;
-        }
-        .game {
-            display: none;
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.9);
-            z-index: 500;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-        }
-        .heart {
-            position: absolute;
-            font-size: 2em;
-            cursor: pointer;
-            animation: fall 3s linear infinite;
-            opacity: 0.8;
-        }
-        @keyframes fall {
-            from { transform: translateY(-100px); }
-            to { transform: translateY(100vh); }
-        }
-        .game-instructions {
-            font-size: 1.5em;
-            margin-bottom: 20px;
-            font-family: 'Dancing Script', cursive;
-        }
-        .final-message {
-            display: none;
-            font-family: 'Dancing Script', cursive;
-            font-size: 3em;
-            color: #e91e63;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-            animation: rainWords 4s ease-in-out infinite;
-        }
-        @keyframes rainWords {
-            0% { transform: translateY(-50px) rotate(0deg); opacity: 0; }
-            25% { opacity: 1; }
-            75% { opacity: 1; }
-            100% { transform: translateY(50px) rotate(5deg); opacity: 0; }
-        }
-        .slideshow {
-            display: none;
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: black;
-            z-index: 999;
-            overflow: hidden;
-        }
-        .slide {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background-size: cover;
-            background-position: center;
-            opacity: 0;
-            transition: opacity 2s ease-in-out;
-        }
-        .slide.active {
-            opacity: 1;
-        }
-        audio {
-            display: none;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valentine 🌸</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+
+<style>
+body{
+margin:0;
+font-family:'Poppins',sans-serif;
+background:linear-gradient(to bottom,#ffd1dc,#ffb6c1);
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+overflow:hidden;
+transition:1.5s ease;
+}
+
+/* 🌸 Petals */
+.petal{
+position:fixed;
+top:-10%;
+font-size:24px;
+opacity:.8;
+animation:fall linear infinite;
+}
+@keyframes fall{
+to{transform:translateY(120vh) rotate(360deg);}
+}
+
+/* Card */
+.card{
+text-align:center;
+background:white;
+padding:28px;
+border-radius:25px;
+box-shadow:0 0 30px rgba(255,0,102,.2);
+animation:fade .8s ease;
+width:85%;
+max-width:420px;
+position:relative;
+}
+
+h1{
+font-family:'Playfair Display',serif;
+color:#b30059;
+}
+
+button{
+padding:14px 32px;
+border:none;
+border-radius:30px;
+background:white;
+color:#b30059;
+cursor:pointer;
+font-size:1rem;
+margin:10px;
+transition:.3s;
+}
+
+#yes{
+background:#ff69b4;
+color:white;
+box-shadow:0 0 20px rgba(255,0,102,.4);
+}
+
+#no{
+background:#ff4d4d;
+color:white;
+position:absolute;
+}
+
+@keyframes fade{
+from{opacity:0;transform:scale(.95);}
+to{opacity:1;transform:scale(1);}
+}
+
+/* Heart Meter */
+#meterBox{
+width:250px;height:14px;background:#ffdce5;
+border-radius:20px;margin:20px auto;overflow:hidden;
+}
+#meterFill{
+height:100%;width:0;background:#ff4d6d;
+transition:1s ease;
+}
+
+.heart{
+font-size:38px;
+cursor:pointer;
+margin:6px;
+transition:.3s;
+}
+.heart:hover{transform:scale(1.2);}
+
+/* Ending Glow */
+#end h1{
+animation:softGlow 3s infinite alternate;
+}
+@keyframes softGlow{
+from{text-shadow:0 0 10px rgba(255,0,102,.3);}
+to{text-shadow:0 0 25px rgba(255,0,102,.7);}
+}
+
+.endText{
+font-size:20px;
+margin-top:10px;
+}
+
+/* 📸 Slideshow */
+#slideshow{
+margin-top:20px;
+height:240px;
+display:flex;
+justify-content:center;
+align-items:center;
+position:relative;
+}
+
+.slide{
+position:absolute;
+width:200px;
+border-radius:18px;
+opacity:0;
+transform:scale(.9);
+transition:all 1s ease;
+box-shadow:0 0 25px rgba(255,77,109,.4);
+}
+
+.slide.active{
+opacity:1;
+transform:scale(1);
+}
+</style>
 </head>
+
 <body>
-    <audio id="song" autoplay loop>
-        <source src="https://github.com/enturinivas-blip/rose-day/raw/main/iddarammayilatho%20movie%20song%20ringtone%20please%20subscribe%20this%20channel%20%F0%9F%99%8F%F0%9F%99%8F(MP3_160K).mp3" type="audio/mpeg">
-    </audio>
-    <div class="container">
-        <div class="emoji">💙💌</div>
-        <div class="love-meter">
-            Love Meter: <span class="hearts">❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️</span>
-        </div>
-        <div class="question" id="question">Will you be my Valentine?</div>
-        <div class="buttons">
-            <button class="yes" onclick="sayYes()">Yes</button>
-            <button class="no" onmouseover="moveNo()" onclick="noPressed()">No</button>
-        </div>
-        <div class="popup" id="popup">Don't press No 💌</div>
-    </div>
-    <div class="game" id="game">
-        <div class="game-instructions">Catch 10 hearts to prove your love! 💖</div>
-        <div id="hearts-container"></div>
-    </div>
-    <div class="final-message" id="final">Love you Praneetha</div>
-    <div class="slideshow" id="slideshow">
-        <div class="slide" style="background-image: url('https://raw.githubusercontent.com/enturinivas-blip/rose-day/refs/heads/main/1758881038362.jpg');"></div>
-        <div class="slide" style="background-image: url('https://raw.githubusercontent.com/enturinivas-blip/rose-day/refs/heads/main/Snapchat-1135964605.jpg');"></div>
-        <div class="slide" style="background-image: url('https://raw.githubusercontent.com/enturinivas-blip/rose-day/refs/heads/main/IMG_20260201_150451.jpg');"></div>
-        <div class="slide" style="background-image: url('https://raw.githubusercontent.com/enturinivas-blip/rose-day/refs/heads/main/IMG_20260201_150451.jpg');"></div>
-        <div class="slide" style="background-image: url('https://raw.githubusercontent.com/enturinivas-blip/rose-day/refs/heads/main/Snapchat-1133313667.jpg');"></div>
-    </div>
-    <script>
-        let noClicks = 0;
-        const questionTexts = ["Will you be my Valentine?", "Are you sure?", "Really?", "Think again 😭"];
 
-        function moveNo() {
-            const noBtn = document.querySelector('.no');
-            const container = document.querySelector('.container');
-            const rect = container.getBoundingClientRect();
-            const btnRect = noBtn.getBoundingClientRect();
-            const newX = Math.random() * (rect.width - btnRect.width);
-            const newY = Math.random() * (rect.height - btnRect.height);
-            noBtn.style.position = 'absolute';
-            noBtn.style.left = newX + 'px';
-            noBtn.style.top = newY + 'px';
-            noBtn.style.transform = 'scale(' + Math.max(0.5, 1 - noClicks * 0.1) + ')';
-            if (noClicks < questionTexts.length - 1) {
-                document.getElementById('question').textContent = questionTexts[++noClicks];
-            }
-        }
+<!-- START -->
+<div class="card" id="start">
+<h1>💌 Tap to open your love letter</h1>
+<button onclick="openLetter()">Open 💙</button>
+</div>
 
-        function noPressed() {
-            document.getElementById('popup').style.display = 'block';
-            setTimeout(() => {
-                document.getElementById('popup').style.display = 'none';
-            }, 2000);
-        }
+<!-- METER -->
+<div class="card" id="meter" style="display:none;">
+<h1>Fill my heart ❤️</h1>
+<div id="meterBox"><div id="meterFill"></div></div>
+<div>
+<span class="heart" onclick="addLove()">❤️</span>
+<span class="heart" onclick="addLove()">❤️</span>
+<span class="heart" onclick="addLove()">❤️</span>
+<span class="heart" onclick="addLove()">❤️</span>
+<span class="heart" onclick="addLove()">❤️</span>
+</div>
+</div>
 
-        function sayYes() {
-            document.querySelector('.container').style.display = 'none';
-            startGame();
-        }
+<!-- QUESTION -->
+<div class="card" id="question" style="display:none;">
+<h1>Will you be my Valentine? 🌹</h1>
+<button id="yes" onclick="accept()">YES 💖</button>
+<button id="no">Are you sure?</button>
+</div>
 
-        function startGame() {
-            const game = document.getElementById('game');
-            game.style.display = 'flex';
-            const container = document.getElementById('hearts-container');
-            let caught = 0;
-            const totalHearts = 10;
+<!-- END -->
+<div class="card" id="end" style="display:none;">
+<h1>love you praneetha ❤️</h1>
+<p class="endText">I wanna be with you till my last breath 🌸</p>
 
-            function createHeart() {
-                const heart = document.createElement('div');
-                heart.className = 'heart';
-                heart.textContent = '❤️';
-                heart.style.left = Math.random() * 90 + '%';
-                heart.style.animationDuration = (Math.random() * 2 + 2) + 's';
-                heart.onclick = () => {
-                    heart.remove();
-                    caught++;
-                    if (caught >= totalHearts) {
-                        game.style.display = 'none';
-                        showFinalMessage();
-                    }
-                };
-                container.appendChild(heart);
-                setTimeout(() => heart.remove(), 4000);
-            }
+<div id="slideshow"></div>
+</div>
 
-            const interval = setInterval(createHeart, 500);
-            setTimeout(() => clearInterval(interval), 10000);
-        }
+<!-- MUSIC -->
+<audio id="music" loop>
+<source src="https://raw.githubusercontent.com/enturinivas-blip/rose-day/main/iddarammayilatho%20movie%20song%20ringtone%20please%20subscribe%20this%20channel%20%F0%9F%99%8F%F0%9F%99%8F(MP3_160K).mp3">
+</audio>
 
-        function showFinalMessage() {
-            document.getElementById('final').style.display = 'block';
-            setTimeout(() => {
-                document.getElementById('final').style.display = 'none';
-                startSlideshow();
-            }, 6000);
-        }
+<script>
 
-        function startSlideshow() {
-            const slideshow = document.getElementById('slideshow');
-            slideshow.style.display = 'block';
-            const slides = document.querySelectorAll('.slide');
-            let currentSlide = 0;
-            slides[currentSlide].classList.add('active');
-            setInterval(() => {
-                slides[currentSlide].classList.remove('active');
-                currentSlide = (currentSlide + 1) % slides.length;
-                slides[currentSlide].classList.add('active');
-            }, 4000);
-        }
+let love=0;
+let tries=0;
+const texts=["Are you sure?","Really?","Think again 😭"];
 
-        // Auto-fill love meter
-        setTimeout(() => {
-            document.querySelector('.hearts').style.opacity = '1';
-        }, 1000);
-    </script>
+const images=[
+"https://raw.githubusercontent.com/enturinivas-blip/rose-day/main/1758881038362.jpg",
+"https://raw.githubusercontent.com/enturinivas-blip/rose-day/main/Snapchat-1135964605.jpg",
+"https://raw.githubusercontent.com/enturinivas-blip/rose-day/main/IMG_20260201_150451.jpg",
+"https://raw.githubusercontent.com/enturinivas-blip/rose-day/main/Snapchat-1133313667.jpg"
+];
+
+function createPetals(){
+for(let i=0;i<18;i++){
+let p=document.createElement("div");
+p.className="petal";
+p.innerHTML="🌸";
+p.style.left=Math.random()*100+"vw";
+p.style.animationDuration=(6+Math.random()*6)+"s";
+document.body.appendChild(p);
+}
+}
+
+function openLetter(){
+start.style.display="none";
+meter.style.display="block";
+music.play();
+createPetals();
+}
+
+function addLove(){
+love+=20;
+meterFill.style.width=love+"%";
+
+if(love>=100){
+meter.style.display="none";
+question.style.display="block";
+alert("don't press no 💌");
+}
+}
+
+no.onmouseover=()=>{
+tries++;
+no.style.left=Math.random()*70+"vw";
+no.style.top=Math.random()*70+"vh";
+no.style.transform=`scale(${1-(tries*.1)})`;
+if(tries<texts.length)no.innerText=texts[tries];
+};
+
+function accept(){
+question.style.display="none";
+end.style.display="block";
+
+/* 📸 Create slideshow */
+let i=0;
+images.forEach(src=>{
+let img=document.createElement("img");
+img.src=src;
+img.className="slide";
+slideshow.appendChild(img);
+});
+
+const slides=document.querySelectorAll(".slide");
+slides[0].classList.add("active");
+
+setInterval(()=>{
+slides[i].classList.remove("active");
+i=(i+1)%slides.length;
+slides[i].classList.add("active");
+},2500);
+
+/* soft breathing background */
+document.body.animate([
+{transform:"scale(1)"},
+{transform:"scale(1.03)"},
+{transform:"scale(1)"}
+],{
+duration:6000,
+iterations:Infinity,
+easing:"ease-in-out"
+});
+}
+</script>
 </body>
 </html>
