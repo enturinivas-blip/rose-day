@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Valentine Magic 💘</title>
+<title>Valentine Surprise 💘</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
 
@@ -13,33 +13,54 @@ height:100vh;
 display:flex;
 justify-content:center;
 align-items:center;
-background:linear-gradient(135deg,#aee7ff,#ffc0cb);
+background:linear-gradient(135deg,#aee7ff,#cfefff);
 font-family:'Poppins',sans-serif;
 overflow:hidden;
-transition:background 1s ease;
+transition:background 1.5s ease;
+}
+
+.container{
+text-align:center;
 }
 
 h1{
 font-family:'Playfair Display',serif;
 color:#ff4d6d;
-text-align:center;
-animation:fade 2s ease;
 }
 
-.container{
-text-align:center;
-position:relative;
-z-index:2;
+.hearts{
+font-size:40px;
+cursor:pointer;
+margin:20px;
+transition:transform .3s;
+}
+
+.hearts:hover{ transform:scale(1.2); }
+
+#meter{
+width:250px;
+height:15px;
+background:#ffffff88;
+border-radius:20px;
+margin:20px auto;
+overflow:hidden;
+}
+
+#fill{
+height:100%;
+width:0%;
+background:#ff4d6d;
+transition:width .5s ease;
 }
 
 button{
 padding:14px 30px;
-margin:15px;
+margin:10px;
 border:none;
 border-radius:30px;
 font-size:1.1rem;
 cursor:pointer;
-transition:all .4s ease;
+transition:all .3s ease;
 }
 
 #yes{
@@ -48,15 +69,15 @@ color:white;
 box-shadow:0 0 15px #ff4d6d88;
 }
 
-#yes:hover{
-transform:scale(1.1);
-box-shadow:0 0 25px #ff4d6d;
-}
-
 #no{
 background:white;
 color:#ff4d6d;
 position:absolute;
+}
+
+#question{
+display:none;
+animation:fade 1s ease;
 }
 
 @keyframes fade{
@@ -64,67 +85,121 @@ from{opacity:0;transform:translateY(20px);}
 to{opacity:1;transform:translateY(0);}
 }
 
-/* 🌹 Floating roses */
-.rose{
-position:absolute;
-font-size:30px;
-animation:float 10s linear infinite;
-opacity:.7;
-}
-
-@keyframes float{
-0%{transform:translateY(100vh) rotate(0);}
-100%{transform:translateY(-20vh) rotate(360deg);}
-}
-
-#ending{
-display:none;
-font-size:1.4rem;
-color:#ff4d6d;
-animation:fade 2s ease;
+/* photo preview glow */
+.preview img{
+width:120px;
+margin:10px;
+border-radius:15px;
+box-shadow:0 0 20px #ff4d6d66;
 }
 </style>
 </head>
 
 <body>
 
-<div class="container" id="main">
-<h1>Praneetha…<br>Will you be my Valentine? 💘</h1>
-<button id="yes" onclick="acceptLove()">YES 💖</button>
-<button id="no">NO 🙈</button>
+<div class="container">
+
+<h1 id="title">Fill my heart first ❤️</h1>
+
+<div id="meter"><div id="fill"></div></div>
+
+<div id="heartArea">
+<span class="hearts" onclick="addLove()">❤️</span>
+<span class="hearts" onclick="addLove()">❤️</span>
+<span class="hearts" onclick="addLove()">❤️</span>
+<span class="hearts" onclick="addLove()">❤️</span>
+<span class="hearts" onclick="addLove()">❤️</span>
 </div>
 
-<div id="ending">
-<h1>Happy Valentine’s Day ❤️<br>You’re my forever choice 🌹</h1>
+<!-- Photos appear slowly -->
+<div class="preview" id="photos"></div>
+
+<div id="question">
+<h1>Now that my heart is full…<br>will you be my Valentine? 💌</h1>
+<button id="yes" onclick="acceptLove()">YES 💖</button>
+<button id="no">Are you sure?</button>
 </div>
+
+</div>
+
+<!-- MUSIC -->
+<audio id="music" loop>
+<source src="https://raw.githubusercontent.com/enturinivas-blip/rose-day/main/Harleys%20in%20hawaii%20%F0%9F%A4%8D%F0%9F%95%8A%20kdrama%20edit%20_shorts%20_youtubeshorts%20_lyrics%20_harleyshawaii(MP3_160K).mp3.mpeg">
+</audio>
 
 <script>
 
-/* 🌹 Create floating roses */
-for(let i=0;i<15;i++){
-let r=document.createElement("div");
-r.className="rose";
-let colors=["🌹","🌸","🔵"];
-r.innerHTML=colors[Math.floor(Math.random()*colors.length)];
-r.style.left=Math.random()*100+"vw";
-r.style.animationDuration=(6+Math.random()*6)+"s";
-document.body.appendChild(r);
+let love=0;
+let noTexts=[
+"Are you sure?",
+"Really?",
+"Think again 😭",
+"Okay okay… click YES!"
+];
+
+const photos=[
+"https://raw.githubusercontent.com/enturinivas-blip/rose-day/main/1770438024258.jpg.jpeg",
+"https://raw.githubusercontent.com/enturinivas-blip/rose-day/main/IMG_20251126_110738.jpg.jpeg",
+"https://raw.githubusercontent.com/enturinivas-blip/rose-day/main/IMG_20260201_150328.jpg.jpeg",
+"https://raw.githubusercontent.com/enturinivas-blip/rose-day/main/Snapchat-20651560.jpg.jpeg"
+];
+
+function addLove(){
+
+if(love===0){
+document.getElementById("music").play();
 }
 
-/* 😄 Moving NO button (smooth) */
-const noBtn=document.getElementById("no");
+love+=20;
+document.getElementById("fill").style.width=love+"%";
+
+/* background shift sky blue -> pink */
+let blue=238-love;
+document.body.style.background=
+`linear-gradient(135deg,rgb(${174+love/3},231,255),rgb(255,${192-love/2},203))`;
+
+/* show photos gradually */
+let p=document.createElement("img");
+p.src=photos[(love/20)-1];
+document.getElementById("photos").appendChild(p);
+
+if(love>=100){
+document.getElementById("title").style.display="none";
+document.getElementById("heartArea").style.display="none";
+document.getElementById("question").style.display="block";
+}
+}
+
+/* 😄 RUNAWAY NO BUTTON */
+let noBtn=document.getElementById("no");
+let tries=0;
+
 noBtn.addEventListener("mouseover",()=>{
+tries++;
+
 let x=Math.random()*(window.innerWidth-120);
 let y=Math.random()*(window.innerHeight-60);
 noBtn.style.left=x+"px";
 noBtn.style.top=y+"px";
+
+/* shrink each time */
+noBtn.style.transform=`scale(${1-(tries*0.1)})`;
+
+/* change text */
+if(tries<noTexts.length){
+noBtn.innerText=noTexts[tries];
+}
 });
 
-/* 💖 YES click ending */
+/* YES CLICK */
 function acceptLove(){
-document.getElementById("main").style.display="none";
-document.getElementById("ending").style.display="block";
-document.body.style.background="linear-gradient(135deg,#ffc0cb,#ff4d6d)";
+document.body.innerHTML=
+`<div style="text-align:center;font-family:Poppins">
+<h1 style="color:#ff4d6d;font-family:Playfair Display">
+Happy Valentine’s Day ❤️<br>
+You’re my forever choice 🌹
+</h1>
+</div>`;
 }
 </script>
 
