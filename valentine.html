@@ -18,20 +18,23 @@
             align-items: center;
             height: 100vh;
             position: relative;
+            transition: all 1.5s ease;
         }
-        .container {
+        .section {
             text-align: center;
             max-width: 600px;
             padding: 30px;
             background: rgba(255, 255, 255, 0.95);
             border-radius: 25px;
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
-            animation: fadeIn 2s ease-in-out;
             position: relative;
+            opacity: 0;
+            transform: scale(0.8) rotate(-5deg);
+            transition: all 0.8s ease;
         }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.8) rotate(-5deg); }
-            to { opacity: 1; transform: scale(1) rotate(0deg); }
+        .section.active {
+            opacity: 1;
+            transform: scale(1) rotate(0deg);
         }
         .emoji {
             font-size: 5em;
@@ -86,7 +89,6 @@
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
         }
         .options {
-            display: none;
             margin: 20px 0;
         }
         .option {
@@ -106,7 +108,6 @@
         }
         .buttons {
             margin: 20px 0;
-            display: none;
         }
         button {
             padding: 12px 25px;
@@ -150,7 +151,6 @@
             font-family: 'Dancing Script', cursive;
         }
         .final-message {
-            display: none;
             font-family: 'Dancing Script', cursive;
             font-size: 2.5em;
             color: #e91e63;
@@ -158,7 +158,6 @@
             margin-bottom: 20px;
         }
         .photos {
-            display: none;
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
@@ -186,8 +185,16 @@
     <audio id="song" autoplay loop>
         <source src="https://github.com/enturinivas-blip/rose-day/raw/main/iddarammayilatho%20movie%20song%20ringtone%20please%20subscribe%20this%20channel%20%F0%9F%99%8F%F0%9F%99%8F(MP3_160K).mp3" type="audio/mpeg">
     </audio>
-    <div class="container">
+    
+    <!-- Section 1: Open Letter -->
+    <div class="section active" id="section1">
         <div class="emoji">💌</div>
+        <div class="question">Tap to open your love letter</div>
+        <button class="yes" onclick="nextSection(2)">Open 💙</button>
+    </div>
+    
+    <!-- Section 2: Love Meter -->
+    <div class="section" id="section2">
         <div class="love-meter">
             Love Meter: <span class="hearts">❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️</span>
         </div>
@@ -195,50 +202,73 @@
             <div class="loading-fill" id="loading-fill"></div>
         </div>
         <div class="blue-heart" onclick="fillLoading()">💙</div>
-        <div class="question" id="question">What is my fav?</div>
-        <div class="options" id="options">
-            <div class="option" onclick="selectOption(1)">1. Calling you bangaram & you calling bangaram</div>
-            <div class="option" onclick="selectOption(2)">2. Seeing you & you seeing me</div>
-            <div class="option" onclick="selectOption(3)">3. Bus 👀</div>
-            <div class="option" onclick="selectOption(4)">4. You talking to me naughty things 🤭🫣</div>
+    </div>
+    
+    <!-- Section 3: Favorite Question -->
+    <div class="section" id="section3">
+        <div class="question">What is my fav?</div>
+        <div class="options">
+            <div class="option" onclick="selectOption()">1. Calling you bangaram & you calling bangaram</div>
+            <div class="option" onclick="selectOption()">2. Seeing you & you seeing me</div>
+            <div class="option" onclick="selectOption()">3. Bus 👀</div>
+            <div class="option" onclick="selectOption()">4. You talking to me naughty things 🤭🫣</div>
         </div>
-        <div class="buttons" id="buttons">
-            <div class="question">Will you be my Valentine?</div>
+    </div>
+    
+    <!-- Section 4: Valentine Question -->
+    <div class="section" id="section4">
+        <div class="question" id="valentine-question">Will you be my Valentine?</div>
+        <div class="buttons">
             <button class="yes" onclick="sayYes()">Yes</button>
             <button class="no" onmouseover="moveNo()" onclick="noPressed()">No</button>
         </div>
         <div class="popup" id="popup">Don't press No 💌</div>
-        <div class="final-message" id="final">
+    </div>
+    
+    <!-- Section 5: Final Message -->
+    <div class="section" id="section5">
+        <div class="final-message">
             I love you Praneetha<br>
             I wanna be with you till last breath
         </div>
-        <div class="photos" id="photos">
+        <div class="photos">
             <div class="photo" style="background-image: url('https://raw.githubusercontent.com/enturinivas-blip/rose-day/refs/heads/main/1758881038362.jpg');"></div>
             <div class="photo" style="background-image: url('https://raw.githubusercontent.com/enturinivas-blip/rose-day/refs/heads/main/Snapchat-1135964605.jpg');"></div>
             <div class="photo" style="background-image: url('https://raw.githubusercontent.com/enturinivas-blip/rose-day/refs/heads/main/IMG_20260201_150451.jpg');"></div>
             <div class="photo" style="background-image: url('https://raw.githubusercontent.com/enturinivas-blip/rose-day/refs/heads/main/Snapchat-1133313667.jpg');"></div>
         </div>
     </div>
+    
     <script>
+        let currentSection = 1;
         let noClicks = 0;
         const questionTexts = ["Will you be my Valentine?", "Are you sure?", "Really?", "Think again 😭"];
+
+        function nextSection(next) {
+            document.getElementById('section' + currentSection).classList.remove('active');
+            currentSection = next;
+            document.getElementById('section' + currentSection).classList.add('active');
+            if (next === 2) {
+                setTimeout(() => {
+                    document.querySelector('.hearts').style.opacity = '1';
+                }, 1000);
+            }
+        }
 
         function fillLoading() {
             document.getElementById('loading-fill').style.width = '100%';
             setTimeout(() => {
-                document.getElementById('options').style.display = 'block';
+                nextSection(3);
             }, 3000);
         }
 
-        function selectOption(option) {
-            // For now, any option proceeds; you can add logic if needed
-            document.getElementById('options').style.display = 'none';
-            document.getElementById('buttons').style.display = 'block';
+        function selectOption() {
+            nextSection(4);
         }
 
         function moveNo() {
             const noBtn = document.querySelector('.no');
-            const container = document.querySelector('.container');
+            const container = document.querySelector('.section');
             const rect = container.getBoundingClientRect();
             const btnRect = noBtn.getBoundingClientRect();
             const newX = Math.random() * (rect.width - btnRect.width);
@@ -248,7 +278,7 @@
             noBtn.style.top = newY + 'px';
             noBtn.style.transform = 'scale(' + Math.max(0.5, 1 - noClicks * 0.1) + ')';
             if (noClicks < questionTexts.length - 1) {
-                document.querySelector('.buttons .question').textContent = questionTexts[++noClicks];
+                document.getElementById('valentine-question').textContent = questionTexts[++noClicks];
             }
         }
 
@@ -260,15 +290,8 @@
         }
 
         function sayYes() {
-            document.querySelector('.container').style.display = 'none';
-            document.getElementById('final').style.display = 'block';
-            document.getElementById('photos').style.display = 'flex';
+            nextSection(5);
         }
-
-        // Auto-fill love meter
-        setTimeout(() => {
-            document.querySelector('.hearts').style.opacity = '1';
-        }, 1000);
     </script>
 </body>
-  </html>
+</html>
