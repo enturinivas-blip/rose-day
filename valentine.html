@@ -17,29 +17,26 @@ display:flex;
 justify-content:center;
 align-items:center;
 overflow:hidden;
-transition:1.2s ease;
 }
 
-/* 🌸 petals */
+/* petals */
 .petal{
 position:fixed;
 top:-10%;
 font-size:22px;
-opacity:.8;
 animation:fall linear infinite;
 }
 @keyframes fall{
 to{transform:translateY(120vh) rotate(360deg);}
 }
 
-/* CARD */
+/* card */
 .card{
 text-align:center;
 background:white;
 padding:30px;
 border-radius:26px;
 box-shadow:0 10px 35px rgba(255,105,180,.2);
-animation:fade .8s ease;
 width:85%;
 max-width:430px;
 position:relative;
@@ -48,7 +45,6 @@ position:relative;
 h1{
 font-family:'Playfair Display',serif;
 color:#c2185b;
-font-weight:600;
 }
 
 button{
@@ -60,17 +56,11 @@ font-size:1rem;
 cursor:pointer;
 background:#ffe3ef;
 color:#c2185b;
-transition:.3s;
-}
-
-button:hover{
-transform:scale(1.05);
 }
 
 #yes{
 background:#ff6fa5;
 color:white;
-box-shadow:0 0 15px rgba(255,105,180,.4);
 }
 
 #no{
@@ -79,12 +69,7 @@ color:white;
 position:absolute;
 }
 
-@keyframes fade{
-from{opacity:0;transform:scale(.95);}
-to{opacity:1;transform:scale(1);}
-}
-
-/* 💙 Loading bar */
+/* loading bar */
 #meterBox{
 width:260px;
 height:14px;
@@ -100,17 +85,12 @@ background:#5bbcff;
 transition:1s ease;
 }
 
-/* blue heart */
 .blueHeart{
 font-size:38px;
 cursor:pointer;
-margin-top:10px;
 color:#5bbcff;
-transition:.3s;
 }
-.blueHeart:hover{transform:scale(1.2);}
 
-/* options */
 .option{
 display:block;
 background:#fff0f6;
@@ -125,9 +105,6 @@ width:90%;
 #slideshow{
 margin-top:15px;
 height:240px;
-display:flex;
-justify-content:center;
-align-items:center;
 position:relative;
 }
 .slide{
@@ -136,26 +113,12 @@ width:210px;
 border-radius:18px;
 opacity:0;
 transform:scale(.9);
-transition:all 1s ease;
+transition:1s;
 box-shadow:0 0 25px rgba(255,77,109,.4);
 }
 .slide.active{
 opacity:1;
 transform:scale(1);
-}
-
-/* glow ending */
-#end h1{
-animation:glow 3s infinite alternate;
-}
-@keyframes glow{
-from{text-shadow:0 0 10px rgba(255,105,180,.3);}
-to{text-shadow:0 0 25px rgba(255,105,180,.7);}
-}
-
-.endText{
-font-size:20px;
-margin-top:8px;
 }
 </style>
 </head>
@@ -175,9 +138,9 @@ margin-top:8px;
 <div class="blueHeart" onclick="addLove()">💙</div>
 </div>
 
-<!-- ❤️ WHAT IS MY FAV -->
+<!-- 🌸 FAV QUESTION -->
 <div class="card" id="fav" style="display:none;">
-<h1>What is my fav? 🌸</h1>
+<h1>What is my fav?</h1>
 
 <div class="option" onclick="favAnswer()">1. Calling you bangaram & you calling bangaram</div>
 <div class="option" onclick="favAnswer()">2. Seeing you & you seeing me</div>
@@ -187,17 +150,17 @@ margin-top:8px;
 <p id="favText"></p>
 </div>
 
-<!-- 🌹 VALENTINE QUESTION -->
+<!-- 🌹 VALENTINE -->
 <div class="card" id="question" style="display:none;">
 <h1>Will you be my Valentine? 🌹</h1>
 <button id="yes" onclick="accept()">YES 💖</button>
 <button id="no">No</button>
 </div>
 
-<!-- ✨ END -->
+<!-- ❤️ END -->
 <div class="card" id="end" style="display:none;">
 <h1>I love you praneetha ❤️</h1>
-<p class="endText">I wanna be with you till last breath 🌸</p>
+<p>I wanna be with you till last breath 🌸</p>
 <div id="slideshow"></div>
 </div>
 
@@ -207,8 +170,21 @@ margin-top:8px;
 
 <script>
 
+/* SAFE element references (fixes blank page) */
+const start = document.getElementById("start");
+const meter = document.getElementById("meter");
+const fav = document.getElementById("fav");
+const question = document.getElementById("question");
+const end = document.getElementById("end");
+const meterFill = document.getElementById("meterFill");
+const favText = document.getElementById("favText");
+const slideshow = document.getElementById("slideshow");
+const music = document.getElementById("music");
+const noBtn = document.getElementById("no");
+
 let love=0;
 let tries=0;
+
 const noTexts=["Are you sure?","Really?","Think again 😭"];
 
 const images=[
@@ -250,21 +226,22 @@ favText.innerText="I like everything about you ❤️";
 setTimeout(()=>{
 fav.style.display="none";
 question.style.display="block";
-},1400);
+},1200);
 }
 
-no.onmouseover=()=>{
+noBtn.onmouseover=()=>{
 tries++;
-no.style.left=Math.random()*70+"vw";
-no.style.top=Math.random()*70+"vh";
-no.style.transform=`scale(${1-(tries*.1)})`;
-if(tries<noTexts.length)no.innerText=noTexts[tries];
+noBtn.style.left=Math.random()*70+"vw";
+noBtn.style.top=Math.random()*70+"vh";
+noBtn.style.transform=`scale(${1-(tries*.1)})`;
+if(tries<noTexts.length)noBtn.innerText=noTexts[tries];
 };
 
 function accept(){
 question.style.display="none";
 end.style.display="block";
 
+/* slideshow */
 let i=0;
 images.forEach(src=>{
 let img=document.createElement("img");
@@ -281,279 +258,8 @@ slides[i].classList.remove("active");
 i=(i+1)%slides.length;
 slides[i].classList.add("active");
 },2500);
-
-document.body.animate([
-{transform:"scale(1)"},
-{transform:"scale(1.03)"},
-{transform:"scale(1)"}
-],{
-duration:6000,
-iterations:Infinity,
-easing:"ease-in-out"
-});
 }
+
 </script>
-
-</body>
-</html>
-            transform: scale(1) rotate(0deg);
-        }
-        .emoji {
-            font-size: 5em;
-            margin-bottom: 20px;
-            animation: bounce 2s infinite;
-        }
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-10px); }
-            60% { transform: translateY(-5px); }
-        }
-        .love-meter {
-            margin: 20px 0;
-            font-size: 1.5em;
-            font-weight: 600;
-        }
-        .hearts {
-            display: inline-block;
-            opacity: 0;
-            transition: opacity 2s ease-in-out;
-        }
-        .loading-bar {
-            width: 80%;
-            height: 20px;
-            background: #e0e0e0;
-            border-radius: 10px;
-            margin: 20px auto;
-            overflow: hidden;
-            position: relative;
-        }
-        .loading-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #ff69b4, #ff1493);
-            width: 0%;
-            transition: width 3s ease-in-out;
-            border-radius: 10px;
-        }
-        .blue-heart {
-            font-size: 3em;
-            cursor: pointer;
-            margin: 10px 0;
-            transition: transform 0.3s;
-        }
-        .blue-heart:hover {
-            transform: scale(1.1);
-        }
-        .question {
-            font-family: 'Dancing Script', cursive;
-            font-size: 2.5em;
-            margin: 20px 0;
-            color: #e91e63;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-        }
-        .options {
-            margin: 20px 0;
-        }
-        .option {
-            display: block;
-            padding: 10px;
-            margin: 10px 0;
-            background: rgba(255, 105, 180, 0.1);
-            border: 2px solid #ff69b4;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-size: 1.1em;
-        }
-        .option:hover {
-            background: rgba(255, 105, 180, 0.2);
-            transform: translateY(-2px);
-        }
-        .buttons {
-            margin: 20px 0;
-        }
-        button {
-            padding: 12px 25px;
-            font-size: 1.2em;
-            font-weight: 600;
-            border: none;
-            border-radius: 15px;
-            cursor: pointer;
-            margin: 0 10px;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-        .yes {
-            background: linear-gradient(45deg, #ff69b4, #ff1493);
-            color: white;
-        }
-        .yes:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 20px rgba(255, 105, 180, 0.3);
-        }
-        .no {
-            background: linear-gradient(45deg, #ff0000, #cc0000);
-            color: white;
-        }
-        .no:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 20px rgba(255, 0, 0, 0.3);
-        }
-        .popup {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: rgba(255, 255, 255, 0.95);
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            display: none;
-            z-index: 1000;
-            font-size: 1.5em;
-            font-family: 'Dancing Script', cursive;
-        }
-        .final-message {
-            font-family: 'Dancing Script', cursive;
-            font-size: 2.5em;
-            color: #e91e63;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
-        }
-        .photos {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 20px;
-        }
-        .photo {
-            width: 150px;
-            height: 150px;
-            background-size: cover;
-            background-position: center;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s;
-        }
-        .photo:hover {
-            transform: scale(1.05);
-        }
-        audio {
-            display: none;
-        }
-    </style>
-</head>
-<body>
-    <audio id="song" autoplay loop>
-        <source src="https://github.com/enturinivas-blip/rose-day/raw/main/iddarammayilatho%20movie%20song%20ringtone%20please%20subscribe%20this%20channel%20%F0%9F%99%8F%F0%9F%99%8F(MP3_160K).mp3" type="audio/mpeg">
-    </audio>
-    
-    <!-- Section 1: Open Letter -->
-    <div class="section active" id="section1">
-        <div class="emoji">💌</div>
-        <div class="question">Tap to open your love letter</div>
-        <button class="yes" onclick="nextSection(2)">Open 💙</button>
-    </div>
-    
-    <!-- Section 2: Love Meter -->
-    <div class="section" id="section2">
-        <div class="love-meter">
-            Love Meter: <span class="hearts">❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️</span>
-        </div>
-        <div class="loading-bar">
-            <div class="loading-fill" id="loading-fill"></div>
-        </div>
-        <div class="blue-heart" onclick="fillLoading()">💙</div>
-    </div>
-    
-    <!-- Section 3: Favorite Question -->
-    <div class="section" id="section3">
-        <div class="question">What is my fav?</div>
-        <div class="options">
-            <div class="option" onclick="selectOption()">1. Calling you bangaram & you calling bangaram</div>
-            <div class="option" onclick="selectOption()">2. Seeing you & you seeing me</div>
-            <div class="option" onclick="selectOption()">3. Bus 👀</div>
-            <div class="option" onclick="selectOption()">4. You talking to me naughty things 🤭🫣</div>
-        </div>
-    </div>
-    
-    <!-- Section 4: Valentine Question -->
-    <div class="section" id="section4">
-        <div class="question" id="valentine-question">Will you be my Valentine?</div>
-        <div class="buttons">
-            <button class="yes" onclick="sayYes()">Yes</button>
-            <button class="no" onmouseover="moveNo()" onclick="noPressed()">No</button>
-        </div>
-        <div class="popup" id="popup">Don't press No 💌</div>
-    </div>
-    
-    <!-- Section 5: Final Message -->
-    <div class="section" id="section5">
-        <div class="final-message">
-            I love you Praneetha<br>
-            I wanna be with you till last breath
-        </div>
-        <div class="photos">
-            <div class="photo" style="background-image: url('https://raw.githubusercontent.com/enturinivas-blip/rose-day/refs/heads/main/1758881038362.jpg');"></div>
-            <div class="photo" style="background-image: url('https://raw.githubusercontent.com/enturinivas-blip/rose-day/refs/heads/main/Snapchat-1135964605.jpg');"></div>
-            <div class="photo" style="background-image: url('https://raw.githubusercontent.com/enturinivas-blip/rose-day/refs/heads/main/IMG_20260201_150451.jpg');"></div>
-            <div class="photo" style="background-image: url('https://raw.githubusercontent.com/enturinivas-blip/rose-day/refs/heads/main/Snapchat-1133313667.jpg');"></div>
-        </div>
-    </div>
-    
-    <script>
-        let currentSection = 1;
-        let noClicks = 0;
-        const questionTexts = ["Will you be my Valentine?", "Are you sure?", "Really?", "Think again 😭"];
-
-        function nextSection(next) {
-            document.getElementById('section' + currentSection).classList.remove('active');
-            currentSection = next;
-            document.getElementById('section' + currentSection).classList.add('active');
-            if (next === 2) {
-                setTimeout(() => {
-                    document.querySelector('.hearts').style.opacity = '1';
-                }, 1000);
-            }
-        }
-
-        function fillLoading() {
-            document.getElementById('loading-fill').style.width = '100%';
-            setTimeout(() => {
-                nextSection(3);
-            }, 3000);
-        }
-
-        function selectOption() {
-            nextSection(4);
-        }
-
-        function moveNo() {
-            const noBtn = document.querySelector('.no');
-            const container = document.querySelector('.section');
-            const rect = container.getBoundingClientRect();
-            const btnRect = noBtn.getBoundingClientRect();
-            const newX = Math.random() * (rect.width - btnRect.width);
-            const newY = Math.random() * (rect.height - btnRect.height);
-            noBtn.style.position = 'absolute';
-            noBtn.style.left = newX + 'px';
-            noBtn.style.top = newY + 'px';
-            noBtn.style.transform = 'scale(' + Math.max(0.5, 1 - noClicks * 0.1) + ')';
-            if (noClicks < questionTexts.length - 1) {
-                document.getElementById('valentine-question').textContent = questionTexts[++noClicks];
-            }
-        }
-
-        function noPressed() {
-            document.getElementById('popup').style.display = 'block';
-            setTimeout(() => {
-                document.getElementById('popup').style.display = 'none';
-            }, 2000);
-        }
-
-        function sayYes() {
-            nextSection(5);
-        }
-    </script>
 </body>
 </html>
