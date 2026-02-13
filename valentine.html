@@ -69,7 +69,7 @@ color:white;
 position:absolute;
 }
 
-/* 💙 Loading */
+/* 💙 Loading bar */
 #meterBox{
 width:260px;
 height:14px;
@@ -101,28 +101,41 @@ cursor:pointer;
 width:90%;
 }
 
-/* 📸 slideshow centered */
+/* 📸 slideshow CENTERED + FLOATING */
 #slideshow{
-margin-top:20px;
-height:260px;
+margin-top:25px;
+height:220px;
 display:flex;
 justify-content:center;
 align-items:center;
 position:relative;
 width:100%;
-overflow:hidden; /* Added to prevent overflow */
+overflow:hidden;
+}
+
+/* ⭐ soft floating animation */
+@keyframes floatSoft{
+0%{transform:translate(-50%,-50%) translateY(0px) scale(.95);}
+50%{transform:translate(-50%,-50%) translateY(-8px) scale(1);}
+100%{transform:translate(-50%,-50%) translateY(0px) scale(.95);}
 }
 
 .slide{
 position:absolute;
 left:50%;
-top:0; /* Changed from top:50% to top:0 to prevent upward overflow */
-transform:translateX(-50%) scale(.9); /* Adjusted transform */
-width:220px;
+top:50%;
+max-width:160px;
+width:70%;
 border-radius:18px;
 opacity:0;
+transform:translate(-50%,-50%) scale(.9);
 transition:all 1s ease;
-box-shadow:0 0 25px rgba(255,77,109,.4);
+box-shadow:0 0 20px rgba(255,77,109,.35);
+}
+
+.slide.active{
+opacity:1;
+animation:floatSoft 5s ease-in-out infinite; /* 🌸 floating effect */
 }
 </style>
 </head>
@@ -226,10 +239,8 @@ fav.style.display="block";
 }
 }
 
-/* ⭐ your logic */
 function favAnswer(){
 favText.innerText="All are correct ❤️\nbut 4th one I want more 🤭❤️";
-
 setTimeout(()=>{
 fav.style.display="none";
 question.style.display="block";
@@ -265,9 +276,8 @@ setInterval(()=>{
 slides[i].classList.remove("active");
 i=(i+1)%slides.length;
 slides[i].classList.add("active");
-},2500);
+},3000);
 }
-
 </script>
 </body>
 </html>
