@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Valentine Letter 💌</title>
+<title>Valentine Cinematic 💘</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Great+Vibes&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
 
 <style>
 
-/* ---------- GLOBAL STYLE ---------- */
+/* 🌌 BACKGROUND */
 body{
 margin:0;
 height:100vh;
@@ -17,28 +17,46 @@ display:flex;
 justify-content:center;
 align-items:center;
 background:linear-gradient(135deg,#cfefff,#ffd1dc);
-font-family:Poppins,sans-serif;
+font-family:Poppins;
 overflow:hidden;
-transition:background 1.5s ease;
+transition:background 2s ease;
 }
 
-.container{
+/* floating cinematic particles */
+.particle{
+position:absolute;
+font-size:18px;
+opacity:.6;
+animation:float linear infinite;
+}
+@keyframes float{
+0%{transform:translateY(100vh)}
+100%{transform:translateY(-20vh)}
+}
+
+/* glass card */
+.card{
 text-align:center;
 width:90%;
-max-width:500px;
-padding:25px;
-border-radius:25px;
-background:rgba(255,255,255,0.25);
-backdrop-filter:blur(15px);
-box-shadow:0 0 30px rgba(255,77,109,0.2);
-animation:fadeIn 1s ease;
+max-width:520px;
+padding:28px;
+border-radius:30px;
+background:rgba(255,255,255,.25);
+backdrop-filter:blur(20px);
+box-shadow:0 0 40px rgba(255,77,109,.25);
+animation:fadeUp 1s ease;
+}
+
+@keyframes fadeUp{
+from{opacity:0;transform:translateY(40px)}
+to{opacity:1;transform:translateY(0)}
 }
 
 h1{font-family:"Playfair Display";color:#ff4d6d;}
-.loveFont{font-family:"Great Vibes";font-size:48px;color:#ff4d6d;}
+.loveFont{font-family:"Great Vibes";font-size:52px;color:#ff4d6d;}
 
 button{
-padding:14px 28px;
+padding:14px 32px;
 border:none;
 border-radius:40px;
 margin:10px;
@@ -47,72 +65,79 @@ cursor:pointer;
 transition:.3s;
 }
 
-#yes{background:#ff69b4;color:white;box-shadow:0 0 15px #ff69b4aa;}
-#yes:hover{transform:scale(1.08);}
+#yes{
+background:#ff69b4;
+color:white;
+box-shadow:0 0 20px #ff69b4aa;
+}
+#yes:hover{transform:scale(1.1);}
 
 #no{
 background:#ff4d4d;
 color:white;
 position:absolute;
-transition:.25s ease;
 }
 
-/* ---------- LETTER ---------- */
+/* 💌 LETTER */
 #letter{
-font-size:70px;
+font-size:80px;
 cursor:pointer;
-animation:float 2s infinite alternate;
+animation:letterFloat 2s infinite alternate;
 }
-@keyframes float{
+@keyframes letterFloat{
 from{transform:translateY(0)}
-to{transform:translateY(-10px)}
+to{transform:translateY(-12px)}
 }
 
-/* ---------- METER ---------- */
+/* ❤️ HEART METER */
 #meterBox{
 width:260px;height:14px;background:#ffffffaa;
 border-radius:20px;margin:20px auto;overflow:hidden;
 }
 #meterFill{
 height:100%;width:0;background:#ff4d6d;
-transition:width .6s ease;
+transition:width .7s ease;
 }
-.heart{
-font-size:38px;
-cursor:pointer;
-margin:6px;
-transition:.3s;
-}
-.heart:hover{transform:scale(1.2);}
 
-/* ---------- PHOTO SLIDESHOW ---------- */
+/* heartbeat pulse */
+.pulse{
+animation:pulseBeat .7s ease;
+}
+@keyframes pulseBeat{
+0%{transform:scale(1)}
+50%{transform:scale(1.15)}
+100%{transform:scale(1)}
+}
+
+/* 🌹 SLIDESHOW */
 #slideshow{
-margin-top:20px;
+margin-top:25px;
 height:260px;
 display:flex;
 justify-content:center;
 align-items:center;
+position:relative;
 }
 .slide{
 position:absolute;
-width:220px;
-border-radius:18px;
+width:230px;
+border-radius:20px;
 opacity:0;
 transform:scale(.9);
-transition:all 1s ease;
-box-shadow:0 0 25px rgba(255,77,109,.4);
+transition:all 1.2s ease;
+box-shadow:0 0 30px rgba(255,77,109,.4);
 }
 .slide.active{
 opacity:1;
 transform:scale(1);
 }
 
-/* ---------- RAIN TEXT ---------- */
+/* 🌧️ LOVE RAIN */
 .rain{
 position:absolute;
 font-family:"Great Vibes";
 color:#ff4d6d;
-font-size:24px;
+font-size:26px;
 animation:fall linear infinite;
 }
 @keyframes fall{
@@ -120,9 +145,15 @@ animation:fall linear infinite;
 100%{transform:translateY(110vh)}
 }
 
-@keyframes fadeIn{
-from{opacity:0;transform:translateY(20px)}
-to{opacity:1;transform:translateY(0)}
+/* 🌹 PETAL BURST */
+.petal{
+position:absolute;
+font-size:22px;
+animation:burst 3s ease forwards;
+}
+@keyframes burst{
+from{opacity:1;transform:scale(1)}
+to{opacity:0;transform:translateY(-200px) rotate(360deg)}
 }
 
 </style>
@@ -130,46 +161,57 @@ to{opacity:1;transform:translateY(0)}
 
 <body>
 
-<!-- 💌 START LETTER -->
-<div class="container" id="start">
+<!-- cinematic floating particles -->
+<script>
+for(let i=0;i<25;i++){
+let p=document.createElement("div");
+p.className="particle";
+p.innerText=Math.random()>.5?"💗":"✨";
+p.style.left=Math.random()*100+"vw";
+p.style.animationDuration=(8+Math.random()*10)+"s";
+document.body.appendChild(p);
+}
+</script>
+
+<!-- 💌 LETTER -->
+<div class="card" id="start">
 <div id="letter">💙💌</div>
 <p>Tap to open your letter</p>
 </div>
 
-<!-- ❤️ HEART METER -->
-<div class="container" id="meter" style="display:none;">
+<!-- ❤️ METER -->
+<div class="card" id="meter" style="display:none;">
 <h1>Fill my heart ❤️</h1>
 <div id="meterBox"><div id="meterFill"></div></div>
 <div>
-<span class="heart" onclick="addLove()">❤️</span>
-<span class="heart" onclick="addLove()">❤️</span>
-<span class="heart" onclick="addLove()">❤️</span>
-<span class="heart" onclick="addLove()">❤️</span>
-<span class="heart" onclick="addLove()">❤️</span>
+<span onclick="addLove()">❤️</span>
+<span onclick="addLove()">❤️</span>
+<span onclick="addLove()">❤️</span>
+<span onclick="addLove()">❤️</span>
+<span onclick="addLove()">❤️</span>
 </div>
 </div>
 
 <!-- 💘 QUESTION -->
-<div class="container" id="question" style="display:none;">
+<div class="card" id="question" style="display:none;">
 <h1>Now that my heart is full…<br>will you be my Valentine? 💌</h1>
 <button id="yes" onclick="accept()">YES 💖</button>
 <button id="no">Are you sure?</button>
 </div>
 
 <!-- 🌸 ENDING -->
-<div class="container" id="end" style="display:none;">
+<div class="card" id="end" style="display:none;">
 <div class="loveFont">love you praneetha</div>
 <div id="slideshow"></div>
 </div>
 
-<!-- 🎵 MUSIC -->
 <audio id="music" loop>
 <source src="https://raw.githubusercontent.com/enturinivas-blip/rose-day/main/iddarammayilatho%20movie%20song%20ringtone%20please%20subscribe%20this%20channel%20%F0%9F%99%8F%F0%9F%99%8F(MP3_160K).mp3">
 </audio>
 
 <script>
 
-/* ---------- DATA ---------- */
+/* images */
 const images=[
 "https://raw.githubusercontent.com/enturinivas-blip/rose-day/main/1758881038362.jpg",
 "https://raw.githubusercontent.com/enturinivas-blip/rose-day/main/Snapchat-1135964605.jpg",
@@ -177,21 +219,20 @@ const images=[
 "https://raw.githubusercontent.com/enturinivas-blip/rose-day/main/Snapchat-1133313667.jpg"
 ];
 
-let love=0;
-let tries=0;
+let love=0,tries=0;
 const texts=["Are you sure?","Really?","Think again 😭"];
 
-/* ---------- OPEN LETTER ---------- */
-document.getElementById("letter").onclick=()=>{
+letter.onclick=()=>{
 start.style.display="none";
 meter.style.display="block";
 music.play();
 };
 
-/* ---------- HEART METER ---------- */
 function addLove(){
 love+=20;
 meterFill.style.width=love+"%";
+meter.classList.add("pulse");
+setTimeout(()=>meter.classList.remove("pulse"),400);
 
 document.body.style.background=
 `linear-gradient(135deg,rgb(${174+love},231,255),rgb(255,${192-love},203))`;
@@ -203,47 +244,56 @@ alert("don't press no 💌");
 }
 }
 
-/* ---------- RUNAWAY NO BUTTON ---------- */
-no.addEventListener("mouseover",()=>{
+/* runaway NO */
+no.onmouseover=()=>{
 tries++;
 no.style.left=Math.random()*80+"vw";
 no.style.top=Math.random()*80+"vh";
-no.style.transform=`scale(${1-(tries*0.1)})`;
-if(tries<texts.length){ no.innerText=texts[tries]; }
-});
+no.style.transform=`scale(${1-(tries*.1)})`;
+if(tries<texts.length)no.innerText=texts[tries];
+};
 
-/* ---------- YES CLICK ---------- */
+/* YES click cinematic ending */
 function accept(){
 question.style.display="none";
 end.style.display="block";
 
-/* raining text */
-for(let i=0;i<35;i++){
+/* 🌹 petal burst */
+for(let i=0;i<30;i++){
+let pet=document.createElement("div");
+pet.className="petal";
+pet.innerText="🌹";
+pet.style.left=Math.random()*100+"vw";
+pet.style.top="60vh";
+document.body.appendChild(pet);
+}
+
+/* 🌧️ love rain */
+for(let i=0;i<40;i++){
 let r=document.createElement("div");
 r.className="rain";
 r.innerText="love you praneetha";
 r.style.left=Math.random()*100+"vw";
-r.style.animationDuration=(5+Math.random()*6)+"s";
+r.style.animationDuration=(5+Math.random()*5)+"s";
 document.body.appendChild(r);
 }
 
-/* professional slideshow */
-let index=0;
+/* cinematic slideshow */
+let i=0;
 images.forEach(src=>{
 let img=document.createElement("img");
 img.src=src;
 img.className="slide";
 slideshow.appendChild(img);
 });
-
 const slides=document.querySelectorAll(".slide");
 slides[0].classList.add("active");
 
 setInterval(()=>{
-slides[index].classList.remove("active");
-index=(index+1)%slides.length;
-slides[index].classList.add("active");
-},2500);
+slides[i].classList.remove("active");
+i=(i+1)%slides.length;
+slides[i].classList.add("active");
+},3000);
 }
 
 </script>
