@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Valentine 🌸</title>
 
-<!-- Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
 
 <style>
@@ -18,31 +17,34 @@ display:flex;
 justify-content:center;
 align-items:center;
 overflow:hidden;
-transition:1.5s ease;
 }
 
-/* 🌸 Falling petals */
+/* 🌸 PETALS BEHIND EVERYTHING */
 .petal{
 position:fixed;
 top:-10%;
 font-size:24px;
-opacity:.8;
+opacity:.7;
 animation:fall linear infinite;
+z-index:0;
+pointer-events:none;
 }
 @keyframes fall{
 to{transform:translateY(120vh) rotate(360deg);}
 }
 
-/* Card */
+/* CARD */
 .card{
+position:relative;
+z-index:5;
 text-align:center;
 background:white;
 padding:28px;
 border-radius:25px;
 box-shadow:0 0 30px rgba(255,0,102,.2);
-animation:fade .8s ease;
 width:85%;
 max-width:420px;
+animation:fade .8s ease;
 }
 
 h1{
@@ -54,8 +56,6 @@ button{
 padding:14px 32px;
 border:none;
 border-radius:30px;
-background:white;
-color:#b30059;
 cursor:pointer;
 font-size:1rem;
 margin:10px;
@@ -65,7 +65,6 @@ transition:.3s;
 #yes{
 background:#ff69b4;
 color:white;
-box-shadow:0 0 20px rgba(255,0,102,.4);
 }
 
 #no{
@@ -79,86 +78,55 @@ from{opacity:0;transform:scale(.95);}
 to{opacity:1;transform:scale(1);}
 }
 
-/* Heart Meter */
-#meterBox{
-width:250px;height:14px;background:#ffdce5;
-border-radius:20px;margin:20px auto;overflow:hidden;
-}
-#meterFill{
-height:100%;width:0;background:#ff4d6d;
-transition:1s ease;
-}
-
-.heart{
-font-size:38px;
-cursor:pointer;
-margin:6px;
-transition:.3s;
-}
-.heart:hover{transform:scale(1.2);}
-
-/* Ending text glow */
-#end h1{
-animation:softGlow 3s infinite alternate;
-}
-@keyframes softGlow{
-from{text-shadow:0 0 10px rgba(255,0,102,.3);}
-to{text-shadow:0 0 25px rgba(255,0,102,.7);}
-}
-
+/* END TEXT */
 .endText{
 font-size:20px;
 margin-top:10px;
+}
+
+/* SLIDESHOW */
+#slideshow{
+margin-top:20px;
+height:220px;
+display:flex;
+justify-content:center;
+align-items:center;
+position:relative;
+}
+.slide{
+position:absolute;
+width:200px;
+border-radius:18px;
+opacity:0;
+transition:1s;
+}
+.slide.active{
+opacity:1;
 }
 </style>
 </head>
 
 <body>
 
-<!-- 💌 START -->
-<div class="card" id="start">
-<h1>💌 Tap to open your love letter</h1>
-<button onclick="openLetter()">Open 💙</button>
-</div>
-
-<!-- ❤️ HEART METER -->
-<div class="card" id="meter" style="display:none;">
-<h1>Fill my heart ❤️</h1>
-<div id="meterBox"><div id="meterFill"></div></div>
-<div>
-<span class="heart" onclick="addLove()">❤️</span>
-<span class="heart" onclick="addLove()">❤️</span>
-<span class="heart" onclick="addLove()">❤️</span>
-<span class="heart" onclick="addLove()">❤️</span>
-<span class="heart" onclick="addLove()">❤️</span>
-</div>
-</div>
-
-<!-- 💘 QUESTION -->
-<div class="card" id="question" style="display:none;">
+<div class="card" id="question">
 <h1>Will you be my Valentine? 🌹</h1>
 <button id="yes" onclick="accept()">YES 💖</button>
-<button id="no">Are you sure?</button>
+<button id="no">No 😢</button>
 </div>
 
-<!-- 🌸 END -->
 <div class="card" id="end" style="display:none;">
 <h1>love you praneetha ❤️</h1>
 <p class="endText">I wanna be with you till my last breath 🌸</p>
+<div id="slideshow"></div>
 </div>
 
-<!-- 🎵 MUSIC -->
 <audio id="music" loop>
 <source src="https://raw.githubusercontent.com/enturinivas-blip/rose-day/main/iddarammayilatho%20movie%20song%20ringtone%20please%20subscribe%20this%20channel%20%F0%9F%99%8F%F0%9F%99%8F(MP3_160K).mp3">
 </audio>
 
 <script>
 
-let love=0;
-let tries=0;
-const texts=["Are you sure?","Really?","Think again 😭"];
-
-function createPetals(){
+/* 🌸 Create petals behind card */
 for(let i=0;i<18;i++){
 let p=document.createElement("div");
 p.className="petal";
@@ -167,50 +135,47 @@ p.style.left=Math.random()*100+"vw";
 p.style.animationDuration=(6+Math.random()*6)+"s";
 document.body.appendChild(p);
 }
-}
 
-function openLetter(){
-start.style.display="none";
-meter.style.display="block";
-music.play();
-createPetals();
-}
-
-function addLove(){
-love+=20;
-meterFill.style.width=love+"%";
-
-if(love>=100){
-meter.style.display="none";
-question.style.display="block";
-alert("don't press no 💌");
-}
-}
-
-/* 😄 Runaway NO button */
+/* RUNAWAY NO BUTTON FLOW */
+let tries=0;
+const texts=["Are you sure?","Really?","Think again 😭"];
 no.onmouseover=()=>{
 tries++;
-no.style.left=Math.random()*70+"vw";
-no.style.top=Math.random()*70+"vh";
-no.style.transform=`scale(${1-(tries*.1)})`;
-if(tries<texts.length)no.innerText=texts[tries];
+no.style.left=Math.random()*60+"vw";
+no.style.top=Math.random()*60+"vh";
+if(tries<texts.length) no.innerText=texts[tries];
 };
 
-/* 🌸 Ending */
+/* ACCEPT */
+const images=[
+"https://raw.githubusercontent.com/enturinivas-blip/rose-day/main/1758881038362.jpg",
+"https://raw.githubusercontent.com/enturinivas-blip/rose-day/main/Snapchat-1135964605.jpg",
+"https://raw.githubusercontent.com/enturinivas-blip/rose-day/main/IMG_20260201_150451.jpg",
+"https://raw.githubusercontent.com/enturinivas-blip/rose-day/main/Snapchat-1133313667.jpg"
+];
+
 function accept(){
 question.style.display="none";
 end.style.display="block";
+music.play();
 
-/* soft breathing background */
-document.body.animate([
-{transform:"scale(1)"},
-{transform:"scale(1.03)"},
-{transform:"scale(1)"}
-],{
-duration:6000,
-iterations:Infinity,
-easing:"ease-in-out"
+/* slideshow */
+let i=0;
+images.forEach(src=>{
+let img=document.createElement("img");
+img.src=src;
+img.className="slide";
+slideshow.appendChild(img);
 });
+
+const slides=document.querySelectorAll(".slide");
+slides[0].classList.add("active");
+
+setInterval(()=>{
+slides[i].classList.remove("active");
+i=(i+1)%slides.length;
+slides[i].classList.add("active");
+},2500);
 }
 
 </script>
