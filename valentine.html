@@ -3,74 +3,66 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Valentine Cinematic 💘</title>
+<title>Valentine 🌸</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Great+Vibes&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
 
 <style>
-
-/* 🌌 BACKGROUND */
 body{
 margin:0;
+font-family:'Poppins',sans-serif;
+background:linear-gradient(to bottom,#ffd1dc,#ffb6c1);
 height:100vh;
 display:flex;
 justify-content:center;
 align-items:center;
-background:linear-gradient(135deg,#cfefff,#ffd1dc);
-font-family:Poppins;
 overflow:hidden;
-transition:background 2s ease;
+transition:1.5s ease;
 }
 
-/* floating cinematic particles */
-.particle{
-position:absolute;
-font-size:18px;
-opacity:.6;
-animation:float linear infinite;
+/* 🌸 PETALS */
+.petal{
+position:fixed;
+top:-10%;
+font-size:24px;
+opacity:.8;
+animation:fall linear infinite;
 }
-@keyframes float{
-0%{transform:translateY(100vh)}
-100%{transform:translateY(-20vh)}
+@keyframes fall{
+to{transform:translateY(120vh) rotate(360deg);}
 }
 
-/* glass card */
 .card{
 text-align:center;
-width:90%;
-max-width:520px;
+background:white;
 padding:28px;
-border-radius:30px;
-background:rgba(255,255,255,.25);
-backdrop-filter:blur(20px);
-box-shadow:0 0 40px rgba(255,77,109,.25);
-animation:fadeUp 1s ease;
+border-radius:25px;
+box-shadow:0 0 30px rgba(255,0,102,.2);
+animation:fade .8s ease;
 }
 
-@keyframes fadeUp{
-from{opacity:0;transform:translateY(40px)}
-to{opacity:1;transform:translateY(0)}
+h1{
+font-family:'Playfair Display',serif;
+color:#b30059;
 }
-
-h1{font-family:"Playfair Display";color:#ff4d6d;}
-.loveFont{font-family:"Great Vibes";font-size:52px;color:#ff4d6d;}
 
 button{
 padding:14px 32px;
 border:none;
-border-radius:40px;
-margin:10px;
-font-size:1rem;
+border-radius:30px;
+background:white;
+color:#b30059;
 cursor:pointer;
+font-size:1rem;
+margin:10px;
 transition:.3s;
 }
 
 #yes{
 background:#ff69b4;
 color:white;
-box-shadow:0 0 20px #ff69b4aa;
+box-shadow:0 0 20px rgba(255,0,102,.4);
 }
-#yes:hover{transform:scale(1.1);}
 
 #no{
 background:#ff4d4d;
@@ -78,131 +70,63 @@ color:white;
 position:absolute;
 }
 
-/* 💌 LETTER */
-#letter{
-font-size:80px;
-cursor:pointer;
-animation:letterFloat 2s infinite alternate;
-}
-@keyframes letterFloat{
-from{transform:translateY(0)}
-to{transform:translateY(-12px)}
+@keyframes fade{
+from{opacity:0;transform:scale(.95);}
+to{opacity:1;transform:scale(1);}
 }
 
-/* ❤️ HEART METER */
 #meterBox{
-width:260px;height:14px;background:#ffffffaa;
+width:250px;height:14px;background:#ffdce5;
 border-radius:20px;margin:20px auto;overflow:hidden;
 }
 #meterFill{
 height:100%;width:0;background:#ff4d6d;
-transition:width .7s ease;
+transition:1s ease;
 }
 
-/* heartbeat pulse */
-.pulse{
-animation:pulseBeat .7s ease;
+.heart{
+font-size:38px;
+cursor:pointer;
+margin:6px;
+transition:.3s;
 }
-@keyframes pulseBeat{
-0%{transform:scale(1)}
-50%{transform:scale(1.15)}
-100%{transform:scale(1)}
-}
+.heart:hover{transform:scale(1.2);}
 
-/* 🌹 SLIDESHOW */
-#slideshow{
-margin-top:25px;
-height:260px;
-display:flex;
-justify-content:center;
-align-items:center;
-position:relative;
+.endText{
+font-size:32px;
+margin-top:15px;
 }
-.slide{
-position:absolute;
-width:230px;
-border-radius:20px;
-opacity:0;
-transform:scale(.9);
-transition:all 1.2s ease;
-box-shadow:0 0 30px rgba(255,77,109,.4);
-}
-.slide.active{
-opacity:1;
-transform:scale(1);
-}
-
-/* 🌧️ LOVE RAIN */
-.rain{
-position:absolute;
-font-family:"Great Vibes";
-color:#ff4d6d;
-font-size:26px;
-animation:fall linear infinite;
-}
-@keyframes fall{
-0%{transform:translateY(-10vh)}
-100%{transform:translateY(110vh)}
-}
-
-/* 🌹 PETAL BURST */
-.petal{
-position:absolute;
-font-size:22px;
-animation:burst 3s ease forwards;
-}
-@keyframes burst{
-from{opacity:1;transform:scale(1)}
-to{opacity:0;transform:translateY(-200px) rotate(360deg)}
-}
-
 </style>
 </head>
 
 <body>
 
-<!-- cinematic floating particles -->
-<script>
-for(let i=0;i<25;i++){
-let p=document.createElement("div");
-p.className="particle";
-p.innerText=Math.random()>.5?"💗":"✨";
-p.style.left=Math.random()*100+"vw";
-p.style.animationDuration=(8+Math.random()*10)+"s";
-document.body.appendChild(p);
-}
-</script>
-
-<!-- 💌 LETTER -->
 <div class="card" id="start">
-<div id="letter">💙💌</div>
-<p>Tap to open your letter</p>
+<h1>💌 Tap to open your love letter</h1>
+<button onclick="openLetter()">Open 💙</button>
 </div>
 
-<!-- ❤️ METER -->
 <div class="card" id="meter" style="display:none;">
 <h1>Fill my heart ❤️</h1>
 <div id="meterBox"><div id="meterFill"></div></div>
 <div>
-<span onclick="addLove()">❤️</span>
-<span onclick="addLove()">❤️</span>
-<span onclick="addLove()">❤️</span>
-<span onclick="addLove()">❤️</span>
-<span onclick="addLove()">❤️</span>
+<span class="heart" onclick="addLove()">❤️</span>
+<span class="heart" onclick="addLove()">❤️</span>
+<span class="heart" onclick="addLove()">❤️</span>
+<span class="heart" onclick="addLove()">❤️</span>
+<span class="heart" onclick="addLove()">❤️</span>
 </div>
 </div>
 
-<!-- 💘 QUESTION -->
 <div class="card" id="question" style="display:none;">
-<h1>Now that my heart is full…<br>will you be my Valentine? 💌</h1>
+<h1>Will you be my Valentine? 🌹</h1>
 <button id="yes" onclick="accept()">YES 💖</button>
 <button id="no">Are you sure?</button>
 </div>
 
-<!-- 🌸 ENDING -->
 <div class="card" id="end" style="display:none;">
-<div class="loveFont">love you praneetha</div>
-<div id="slideshow"></div>
+<h1>love you praneetha ❤️</h1>
+<p class="endText">I wanna be with you till my last breath 🌸</p>
 </div>
 
 <audio id="music" loop>
@@ -210,32 +134,31 @@ document.body.appendChild(p);
 </audio>
 
 <script>
-
-/* images */
-const images=[
-"https://raw.githubusercontent.com/enturinivas-blip/rose-day/main/1758881038362.jpg",
-"https://raw.githubusercontent.com/enturinivas-blip/rose-day/main/Snapchat-1135964605.jpg",
-"https://raw.githubusercontent.com/enturinivas-blip/rose-day/main/IMG_20260201_150451.jpg",
-"https://raw.githubusercontent.com/enturinivas-blip/rose-day/main/Snapchat-1133313667.jpg"
-];
-
-let love=0,tries=0;
+let love=0;
+let tries=0;
 const texts=["Are you sure?","Really?","Think again 😭"];
 
-letter.onclick=()=>{
+function createPetals(){
+for(let i=0;i<18;i++){
+let p=document.createElement("div");
+p.className="petal";
+p.innerHTML="🌸";
+p.style.left=Math.random()*100+"vw";
+p.style.animationDuration=(5+Math.random()*5)+"s";
+document.body.appendChild(p);
+}
+}
+
+function openLetter(){
 start.style.display="none";
 meter.style.display="block";
 music.play();
-};
+createPetals();
+}
 
 function addLove(){
 love+=20;
 meterFill.style.width=love+"%";
-meter.classList.add("pulse");
-setTimeout(()=>meter.classList.remove("pulse"),400);
-
-document.body.style.background=
-`linear-gradient(135deg,rgb(${174+love},231,255),rgb(255,${192-love},203))`;
 
 if(love>=100){
 meter.style.display="none";
@@ -244,7 +167,6 @@ alert("don't press no 💌");
 }
 }
 
-/* runaway NO */
 no.onmouseover=()=>{
 tries++;
 no.style.left=Math.random()*80+"vw";
@@ -253,49 +175,11 @@ no.style.transform=`scale(${1-(tries*.1)})`;
 if(tries<texts.length)no.innerText=texts[tries];
 };
 
-/* YES click cinematic ending */
 function accept(){
 question.style.display="none";
 end.style.display="block";
-
-/* 🌹 petal burst */
-for(let i=0;i<30;i++){
-let pet=document.createElement("div");
-pet.className="petal";
-pet.innerText="🌹";
-pet.style.left=Math.random()*100+"vw";
-pet.style.top="60vh";
-document.body.appendChild(pet);
 }
-
-/* 🌧️ love rain */
-for(let i=0;i<40;i++){
-let r=document.createElement("div");
-r.className="rain";
-r.innerText="love you praneetha";
-r.style.left=Math.random()*100+"vw";
-r.style.animationDuration=(5+Math.random()*5)+"s";
-document.body.appendChild(r);
-}
-
-/* cinematic slideshow */
-let i=0;
-images.forEach(src=>{
-let img=document.createElement("img");
-img.src=src;
-img.className="slide";
-slideshow.appendChild(img);
-});
-const slides=document.querySelectorAll(".slide");
-slides[0].classList.add("active");
-
-setInterval(()=>{
-slides[i].classList.remove("active");
-i=(i+1)%slides.length;
-slides[i].classList.add("active");
-},3000);
-}
-
 </script>
+
 </body>
 </html>
